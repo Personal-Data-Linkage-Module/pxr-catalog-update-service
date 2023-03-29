@@ -1,0 +1,91 @@
+{
+    "db": {
+        "host": "localhost",
+        "port": 5432,
+        "database": "pxr_pod",
+        "schema": "pxr_catalog_update",
+        "user": "pxr_catalog_update_user",
+        "password": "pxr_password",
+        "timeout": 60000
+    },
+    "app":{
+        "approval_expire_day": 7,
+        "auth_code_length": 8,
+        "cookie_base_name": "operator_type%s_session",
+        "approval_block": 1000110,
+        "approval_url": "/catalog-update/actor/approval?code=%s",
+        "join_url": "/catalog-update/join/approval/%s",
+        "transferPath": "/notification/transfer",
+        "operator": {
+            "hostname": "localhost",
+            "port": 3000,
+            "base_url": "http://localhost:3000/operator",
+            "base_path": "/operator"
+        },
+        "catalog": {
+            "hostname": "localhost",
+            "port": 3001,
+            "base_url": "http://localhost:3001/catalog",
+            "base_path": "/catalog",
+            "ext_name": "test-org",
+            "getName": "http://localhost:3001/catalog/name",
+            "postUpdateSetRegister": "http://localhost:3001/catalog/updateSet/register",
+            "postUpdateSetRequest": "http://localhost:3001/catalog/updateSet/request",
+            "postUpdateSetApproval": "http://localhost:3001/catalog/updateSet/approval/",
+            "requestGlobalCatalogNs": "catalog/ext/aaa-healthcare-consortium/setting/global",
+            "notice": {
+                "updateSet": {
+                    "applying": {
+                        "category": 196,
+                        "url": "/catalog-update/updateSet/approval/%s"
+                    },
+                    "approval": {
+                        "category": 197
+                    },
+                    "deny": {
+                        "category": 198
+                    }
+                },
+                "dataOperation": {
+                    "applying": {
+                        "category": 199,
+                        "url": "/catalog-update/data-operation/approval?code=%s"
+                    },
+                    "approval": {
+                        "category": 200
+                    },
+                    "deny": {
+                        "category": 201
+                    }
+                }
+            }
+        },
+        "proxy": {
+            "protocol": "http://",
+            "host": "localhost",
+            "port": 3003,
+            "path": "/pxr-block-proxy"
+        },
+        "notification": {
+            "hostname": "localhost",
+            "port": 3004,
+            "base_url": "http://localhost:3004/notification",
+            "base_path": "/notification"
+        },
+        "certification_authority": {
+            "hostname": "localhost",
+            "port": 3012,
+            "base_url": "http://localhost:3012/certification-authority",
+            "base_path": "/certification-authority"
+        },
+        "access_control": {
+            "hostname": "localhost",
+            "port": 3015,
+            "path": "/access-control/collate"
+        },
+        "book_manage": {
+            "base_url": "http://localhost:3005/book-manage"
+        },
+        "timezone": "Asia/Tokyo"
+    }
+}

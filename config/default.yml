@@ -1,0 +1,143 @@
+# Copyright 2022 NEC Corporation
+# Released under the MIT license.
+# https://opensource.org/licenses/mit-license.php
+#
+# SDE-IMPL-RECOMMENDED REST API サーバーのポート番号を指定します
+ports:
+    http: 3002
+
+# SDE-IMPL-RECOMMENDED ログレベルを次のいずれかを設定します[none/debug/info]
+loglevel: info
+
+# SDE-MSA-PRIN 過負荷を回避する （MSA-PRIN-ID-02）
+# SDE-IMPL-RECOMMENDED Backpressureの設定をします
+backPressure:
+    threshold: 100  # 同時実行数しきい値
+
+catalog:
+    ns: catalog/ext/%s/actor/%s
+    extName: test-org
+    actorSettingNs: catalog/ext/%s/setting/actor/%s/actor_%s
+
+catalogService:
+    get: http://localhost:3001/catalog/
+    ext: http://localhost:3001/catalog/ext
+    addExtNs: http://localhost:3001/catalog/ns/ext
+
+operatorService:
+    session: http://localhost:3000/operator/session
+
+notificationService:
+    add: http://localhost:3004/notification/
+
+certificationAuthorityService:
+    clientIssuance: http://localhost:3012/certification-authority/client
+    clientRevoke: http://localhost:3012/certification-authority/client/%s/%s
+    certListByActorCode: http://localhost:3012/certification-authority/list/%s
+
+certificateManageService:
+    revokeCertificate: http://localhost:3013/certificate-manage/%s/%s
+
+bookManageService:
+    search: http://localhost:3005/book-manage/search
+    searchCooperate: http://localhost:3005/book-manage/search/cooperate
+
+authCodeLength: 8
+
+noticeBlockCode: 1000110
+
+leave:
+    title:
+        applying: 提携解除
+        approved: 提携解除要求 承認結果[承認]
+        nonApproved: 提携解除要求 承認結果[非承認]
+    content:
+        applying: 提携解除要求がありました
+        approved: 要求は承認され、アクター間での提携は解除されました
+        nonApproved: 要求は却下され、アクター間での提携は継続されます。\n否認コメント：%s
+
+join:
+    applying: 120
+    approved: 121
+    nonApproved: 122
+    title:
+        applying: 参加要求
+        approved: 参加要求 承認結果[承認]
+        nonApproved: 参加要求 承認結果[非承認]
+    content:
+        applying: 参加を要求します
+        approved: 要求は承認され、参加関係となりました
+        nonApproved: 要求は却下され、それぞれは参加関係になっていません。\n否認コメント：%s
+    noticeUrl: /catalog-update/join/approval/%s
+defection:
+    title:
+        applying: 離脱要求
+        approved: 離脱要求 承認結果[承認]
+        nonApproved: 離脱要求 承認結果[非承認]
+    content:
+        applying: 離脱を要求します
+        approved: 要求は承認され、それぞれの参加関係は解消されました
+        nonApproved: 要求は却下され、参加関係が継続されます。\n否認コメント：%s
+
+actor:
+    applying: 117
+    approved: 118
+    nonApproved: 119
+    cert: 138
+    title:
+        applying: アクター認定申請
+        approved: アクター認定承認結果
+        nonApproved: アクター認定承認結果
+        cert: 証明書URLの通知
+    content:
+        applying: アクター認定の申請です。認定または否認をお願いします。
+        approved: 申請したアクター認定は承認されました。
+        nonApproved: 申請したアクター認定は否認されました。\n否認コメント：%s
+        cert: アクター：%sへ証明書を送付してください。シリアル番号：%s, フィンガープリント：%s
+    noticeUrl: /catalog-update/actor/approval?code=%s
+remove:
+    title:
+        applying: アクター認定解除申請
+        approved: アクター認定解除　承認結果[承認]
+        nonApproved: アクター認定解除　承認結果[否認]
+    content:
+        applying: アクター認定解除の申請です。承認または否認をお願いします。
+        approved: 申請したアクター認定解除は承認されました。
+        nonApproved: 申請したアクター認定解除は否認されました。\n否認コメント：%s
+    noticeUrl: /catalog-update/actor/approval?code=%s
+migration:
+    applying: 157
+    title: 
+        applying: Block管理移行申請
+        approved: Block管理移行申請 承認結果[承認]
+        completed: Block管理移行完了
+    content: 
+        applying: Blockの管理移行申請です。承認または否認をお願いします。
+        approved: Block管理移行申請が承認されました。
+        completed: 承認したBlockの管理移行が完了しました。
+
+region:
+    applying: 205
+    approved: 206
+    nonApproved: 207
+    add:
+        title:
+            applying: Region開始要求
+            approved: Region開始要求 承認結果[承認]
+            nonApproved: Region開始要求 承認結果[非承認]
+        content:
+            applying: Region開始を要求します
+            approved: 要求は承認され、Regionは開始されました
+            nonApproved: 要求は却下され、Regionは開始されませんでした。\n否認コメント：%s
+    remove:
+        title:
+            applying: Region終了要求
+            approved: Region終了要求 承認結果[承認]
+            nonApproved: Region終了要求 承認結果[非承認]
+        content:
+            applying: Region終了を要求します
+            approved: 要求は承認され、Regionは終了されました
+            nonApproved: 要求は却下され、Regionは継続されます。\n否認コメント：%s
+    noticeUrl: /catalog-update/region/status/approval/%s
+
+timezone: Asia/Tokyo

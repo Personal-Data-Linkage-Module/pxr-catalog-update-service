@@ -1,0 +1,66 @@
+{
+    "description": "アクター認定承認時にアクター種別毎に追加登録するsettingカタログの一覧",
+    "pxr-root": {
+        "catalogItem": {
+            "ns": "catalog/ext/{ext_name}/setting/actor/pxr-root/actor_{catalog_code}",
+            "name": "{name}：アクター個別設定",
+            "description": "{root_name}による{name}のアクター個別設定の定義です。",
+            "_code": null,
+            "inherit": {
+                "_value": 130,
+                "_ver": 1
+            }
+        },
+        "template": {
+            "prop": null,
+            "value": null
+        },
+        "inner": null,
+        "attribute": null
+    },
+    "region-root": {
+        "catalogItem": {
+            "ns": "catalog/ext/{ext_name}/setting/actor/region-root/actor_{catalog_code}",
+            "name": "{name}：アクター個別設定",
+            "description": "{root_name}による{name}のアクター個別設定の定義です。",
+            "_code": null,
+            "inherit": {
+                "_value": 132,
+                "_ver": 1
+            }
+        },
+        "template": {
+            "prop": null,
+            "value": [
+                {
+                    "key": "certify-app",
+                    "value": false
+                },
+                {
+                    "key": "certify-wf",
+                    "value": false
+                }
+            ]
+        },
+        "inner": null,
+        "attribute": null
+    },
+    "app": {
+        "catalogItem": {
+            "ns": "catalog/ext/{ext_name}/setting/actor/app/actor_{catalog_code}",
+            "name": "{name}：アクター個別設定",
+            "description": "{root_name}による{name}のアクター個別設定の定義です。",
+            "_code": null,
+            "inherit": {
+                "_value": 127,
+                "_ver": 1
+            }
+        },
+        "template": {
+            "prop": null,
+            "value": null
+        },
+        "inner": null,
+        "attribute": null
+    }
+}

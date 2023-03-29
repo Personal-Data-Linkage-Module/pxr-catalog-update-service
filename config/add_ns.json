@@ -1,0 +1,85 @@
+{
+    "description": "アクター認定承認時にアクター種別毎に追加登録するネームスペースの一覧",
+    "pxr-root": [
+        {
+            "ns": "catalog/ext/{ext_name}/setting/actor/pxr-root/actor_{catalog_code}",
+            "description": "{root_name}よる{name}のアクター個別設定を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/setting/actor-own/pxr-root/actor_{catalog_code}",
+            "description": "{name}のアクター個別設定を定義するための名前空間です。"
+        }
+    ],
+    "region-root": [
+        {
+            "ns": "catalog/ext/{ext_name}/setting/actor/region-root/actor_{catalog_code}",
+            "description": "{root_name}による{name}のアクター個別設定を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/setting/actor-own/region-root/actor_{catalog_code}",
+            "description": "{name}のアクター個別設定を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/actor/region-root/actor_{catalog_code}",
+            "description": "{name}を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/actor/region-root/actor_{catalog_code}/region",
+            "description": "{name}が管理するRegionを定義するための名前空間です。"
+        }
+    ],
+    "app": [
+        {
+            "ns": "catalog/ext/{ext_name}/actor/app/actor_{catalog_code}",
+            "description": "{name}を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/actor/app/actor_{catalog_code}/application",
+            "description": "{name}のアプリケーションを定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/actor/app/actor_{catalog_code}/store",
+            "description": "{name}が蓄積可能なデータを定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/actor/app/actor_{catalog_code}/share",
+            "description": "{name}が提供する状態共有機能を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/document/actor_{catalog_code}",
+            "description": "{name}のドキュメントを定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/env/actor_{catalog_code}",
+            "description": "{name}の環境情報を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/event/actor_{catalog_code}",
+            "description": "{name}のイベントを定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/qualitative/actor_{catalog_code}",
+            "description": "{name}の定性値候補を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/qualitative/actor_{catalog_code}/qa",
+            "description": "{name}の回答候補を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/setting/actor/app/actor_{catalog_code}",
+            "description": "{root_name}による{name}のアクター個別設定を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/setting/actor-own/app/actor_{catalog_code}",
+            "description": "{name}のアクター個別設定を定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/thing/actor_{catalog_code}",
+            "description": "{name}のモノを定義するための名前空間です。"
+        },
+        {
+            "ns": "catalog/ext/{ext_name}/thing/actor_{catalog_code}/qa",
+            "description": "{name}の質問を定義するための名前空間です。"
+        }
+    ]
+}

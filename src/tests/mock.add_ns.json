@@ -1,0 +1,9 @@
+{
+    "description": "アクター認定承認時にアクター種別毎に追加登録するネームスペースの一覧",
+    "pxr-root": [],
+    "region-root": [],
+    "app": [],
+    "wf": [],
+    "data-trader": [],
+    "consumer": []
+}
