@@ -10,32 +10,32 @@ import { transformToNumber } from '../../common/Transform';
 export class User {
     @IsString()
     @IsDefined()
-    pxrId: string;
+        pxrId: string;
 
     @IsString()
     @IsOptional()
-    UserId: string;
+        UserId: string;
 }
 
 export default class {
     @IsNumber()
     @IsDefined()
     @Transform(transformToNumber)
-    actor: number;
+        actor: number;
 
     @IsNumber()
     @IsOptional()
     @Transform(transformToNumber)
-    app: number;
+        app: number;
 
     @IsNumber()
     @IsOptional()
     @Transform(transformToNumber)
-    wf: number;
+        wf: number;
 
     @IsOptional()
     @IsArray()
     @Type(type => User)
     @ValidateNested()
-    users: User[];
+        users: User[];
 }

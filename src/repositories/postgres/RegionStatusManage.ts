@@ -18,63 +18,63 @@ export default class RegionStatusManage extends BaseEntity {
 
     /** ID */
     @PrimaryGeneratedColumn({ type: 'bigint' })
-    id!: number;
+        id!: number;
 
     /** 開始終了Regionカタログコード */
     @Column({ type: 'bigint', name: 'region_code' })
-    regionCode: number;
+        regionCode: number;
 
     /** 開始終了Regionカタログバージョン */
     @Column({ type: 'bigint', name: 'region_version' })
-    regionVersion: number;
+        regionVersion: number;
 
     /** 申請元Blockカタログコード */
     @Column({ type: 'bigint', name: 'caller_block_code', nullable: false })
-    callerBlockCode: number;
+        callerBlockCode: number;
 
     /** 申請元Blockカタログバージョン */
     @Column({ type: 'bigint', name: 'caller_block_version', nullable: false })
-    callerBlockVersion: number;
+        callerBlockVersion: number;
 
     /** 申請元アクターカタログコード */
     @Column({ type: 'bigint', name: 'applicant_actor_code' })
-    applicantActorCode: number;
+        applicantActorCode: number;
 
     /** 申請元アクターカタログバージョン */
     @Column({ type: 'bigint', name: 'applicant_actor_version' })
-    applicantActorVersion: number;
+        applicantActorVersion: number;
 
     /** 申請先アクターカタログコード */
     @Column({ type: 'bigint', name: 'approval_actor_code' })
-    approvalActorCode: number;
+        approvalActorCode: number;
 
     /** 申請先アクターカタログバージョン */
     @Column({ type: 'bigint', name: 'approval_actor_version' })
-    approvalActorVersion: number;
+        approvalActorVersion: number;
 
     /** 承認有効期限 */
     @Column({ type: 'timestamp without time zone', name: 'approval_expire_at' })
-    approvalExpireAt: Date;
+        approvalExpireAt: Date;
 
     /** 申請種別（開始: 1, 終了: 2） */
     @Column({ type: 'bigint', nullable: false })
-    type: number;
+        type: number;
 
     /** 終了予定日 */
     @Column({ type: 'timestamp without time zone', name: 'end_date' })
-    endDate: Date;
+        endDate: Date;
 
     /** テンプレート */
     @Column({ type: 'text', name: 'request_comment' })
-    requestComment: string;
+        requestComment: string;
 
     /** 削除フラグ（削除済：true） */
     @Column({ type: 'boolean', name: 'is_disabled', nullable: false, default: false })
-    isDisabled: boolean;
+        isDisabled: boolean;
 
     /** 登録者 */
     @Column({ type: 'bigint', name: 'created_by', nullable: false })
-    createdBy: string;
+        createdBy: string;
 
     /** 登録日時 */
     @CreateDateColumn({ type: 'timestamp without time zone', name: 'created_at', nullable: false })
@@ -82,14 +82,14 @@ export default class RegionStatusManage extends BaseEntity {
 
     /** 更新者 */
     @Column({ type: 'bigint', name: 'updated_by', nullable: false })
-    updatedBy: string;
+        updatedBy: string;
 
     /** 更新日時 */
     @UpdateDateColumn({ type: 'timestamp without time zone', name: 'updated_at', nullable: false })
-    updatedAt: Date;
+        updatedAt: Date;
 
     /** Region開始終了申請承認管理テーブルのレコード */
     @OneToOne(type => RegionStatusApprovalManage, regionStatusApprovalManage => regionStatusApprovalManage.regionStatusManage)
     @JoinColumn({ name: 'id', referencedColumnName: 'regionStatusManageId' })
-    regionStatusApprovalManage: RegionStatusApprovalManage;
+        regionStatusApprovalManage: RegionStatusApprovalManage;
 }

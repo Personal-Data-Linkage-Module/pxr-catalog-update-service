@@ -21,7 +21,7 @@ export default class UpdateSetRequestPostReqDto {
     @Transform(id => parseInt(id))
     @IsNumber()
     @Min(1)
-    id: number = null;
+        id: number = null;
 
     /**
      * 承認アクターコードオブジェクト
@@ -31,5 +31,5 @@ export default class UpdateSetRequestPostReqDto {
     @Transform(approvalActor => parseInt(approvalActor))
     @IsNumber()
     @Min(1)
-    approvalActor: number = null;
+        approvalActor: number = null;
 }

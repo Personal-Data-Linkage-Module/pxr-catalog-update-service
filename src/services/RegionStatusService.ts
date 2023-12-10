@@ -186,7 +186,7 @@ export default class RegionStatusService {
             },
             approval: {
                 noticeBlockCode: parseInt(config.get('noticeBlockCode')),
-                noticeUrl: noticeUrl
+                noticeUrl
             }
         };
         const result = await NotificationService.linkage([detail], operator);
@@ -305,8 +305,8 @@ export default class RegionStatusService {
 
         const detail: NotificationDomain = {
             type: 0,
-            title: title,
-            content: content,
+            title,
+            content,
             attribute: {
                 actor: operator.actorCode,
                 id: entity.id,
@@ -326,8 +326,8 @@ export default class RegionStatusService {
 
         const detail2: NotificationDomain = {
             type: 0,
-            title: title,
-            content: content,
+            title,
+            content,
             attribute: {
                 actor: operator.actorCode,
                 id: entity.id,

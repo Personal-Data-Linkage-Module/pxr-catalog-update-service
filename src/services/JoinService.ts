@@ -187,8 +187,8 @@ export default class JoinService {
 
         const detail: NotificationDomain = {
             type: 0,
-            title: title,
-            content: content,
+            title,
+            content,
             category: {
                 _value: categoryCode,
                 _ver: categoryVersion
@@ -203,8 +203,8 @@ export default class JoinService {
 
         const detail2: NotificationDomain = {
             type: 0,
-            title: title,
-            content: content,
+            title,
+            content,
             category: {
                 _value: categoryCode,
                 _ver: categoryVersion
@@ -524,7 +524,7 @@ export default class JoinService {
             },
             approval: {
                 noticeBlockCode: parseInt(config.get('noticeBlockCode')),
-                noticeUrl: noticeUrl
+                noticeUrl
             }
         };
         const result = await NotificationService.linkage([detail], operator);

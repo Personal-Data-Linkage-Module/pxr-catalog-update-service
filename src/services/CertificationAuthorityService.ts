@@ -36,7 +36,7 @@ export default class CertificationAuthorityService {
     ): Promise<ClientCertificate> {
         const data = JSON.stringify({
             certType: 'client',
-            actorName: actorName,
+            actorName,
             actor: {
                 value: actorCode,
                 ver: actorVersion

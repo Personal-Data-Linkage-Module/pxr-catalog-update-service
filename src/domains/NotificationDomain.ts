@@ -23,7 +23,7 @@ export default class NotificationDomain {
         _value: number;
 
         _ver: number;
-    }
+    };
 
     destination: {
         blockCode: number;
@@ -35,7 +35,7 @@ export default class NotificationDomain {
         operatorId?: number[];
 
         userId?: string[];
-    }
+    };
 
     approval?: {
         noticeBlockCode: number;
@@ -43,5 +43,5 @@ export default class NotificationDomain {
         noticeUrl: string;
 
         expirationAt?: Date;
-    }
+    };
 }

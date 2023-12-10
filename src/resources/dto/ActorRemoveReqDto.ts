@@ -22,18 +22,18 @@ export default class ActorRemoveReqDto {
     @Transform(transformToNumber)
     @IsNumber()
     @IsOptional()
-    id?: number;
+        id?: number;
 
     /** 移行先アクター */
     @Transform(transformToNumber)
     @IsNumber()
     @IsOptional()
-    migrationActorCode: number | null;
+        migrationActorCode: number | null;
 
     /** 下書きフラグ */
     @Transform(transformToBooleanFromString)
     @IsDefined()
     @IsNotEmpty()
     @IsBoolean()
-    isDraft: boolean;
+        isDraft: boolean;
 }

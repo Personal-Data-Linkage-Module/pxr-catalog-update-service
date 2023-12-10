@@ -238,9 +238,9 @@ export default class DataOperationService {
             }
         }
         const ret = {
-            documents: documents,
-            events: events,
-            things: things
+            documents,
+            events,
+            things
         };
         return ret;
     }

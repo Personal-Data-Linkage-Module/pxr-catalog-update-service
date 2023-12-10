@@ -250,7 +250,7 @@ export default class ActorService {
                 _ver: undefined
             },
             destination: {
-                blockCode: blockCode,
+                blockCode,
                 operatorType: 3,
                 isSendAll: true
             },
@@ -311,10 +311,12 @@ export default class ActorService {
             const response: any = {};
             response.id = Number(entity.id);
             response.type = Number(entity.type);
-            const approvalActor = entity.actorApprovalManage.approvalActorCode ? {
-                _value: entity.actorApprovalManage.approvalActorCode,
-                _ver: entity.actorApprovalManage.approvalActorVersion
-            } : null;
+            const approvalActor = entity.actorApprovalManage.approvalActorCode
+                ? {
+                    _value: entity.actorApprovalManage.approvalActorCode,
+                    _ver: entity.actorApprovalManage.approvalActorVersion
+                }
+                : null;
             response.approvalActor = approvalActor;
             response.actorCatalog = JSON.parse(entity.template);
             response.isDraft = entity.isDraft;
@@ -946,7 +948,7 @@ export default class ActorService {
                     _ver: undefined
                 },
                 destination: {
-                    blockCode: blockCode,
+                    blockCode,
                     operatorType: 3,
                     isSendAll: true
                 },
@@ -972,7 +974,7 @@ export default class ActorService {
                     _ver: undefined
                 },
                 destination: {
-                    blockCode: blockCode,
+                    blockCode,
                     operatorType: 3,
                     isSendAll: true
                 },

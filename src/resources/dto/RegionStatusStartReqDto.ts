@@ -12,12 +12,12 @@ export class CodeObject {
     @Transform(transformToNumber)
     @IsDefined()
     @IsNumber()
-    _value: number;
+        _value: number;
 
     @Transform(transformToNumber)
     @IsDefined()
     @IsNumber()
-    _ver: number;
+        _ver: number;
 }
 
 /**
@@ -27,5 +27,5 @@ export default class RegionStatusStartReqDto {
     @Type(() => CodeObject)
     @ValidateNested()
     @IsDefined()
-    regionCode: CodeObject;
+        regionCode: CodeObject;
 }

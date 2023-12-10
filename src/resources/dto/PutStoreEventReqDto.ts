@@ -24,50 +24,50 @@ export class CodeObject {
     @IsDefined()
     @IsNumber()
     @Transform(transformToNumber)
-    _value: number;
+        _value: number;
 
     @IsDefined()
     @IsNumber()
     @Transform(transformToNumber)
-    _ver: number;
+        _ver: number;
 }
 
 export class CodeValueObj {
     @IsDefined()
     @IsNumber()
     @Transform(transformToNumber)
-    _value: number;
+        _value: number;
 }
 
 export class CatalogItem {
     @IsDefined()
     @IsString()
     @IsNotEmpty()
-    ns: string;
+        ns: string;
 
     @IsOptional()
     @IsString()
-    name: string;
+        name: string;
 
     @IsOptional()
     @IsString()
-    description: string;
+        description: string;
 
     @IsDefined()
     @Type(() => CodeValueObj)
     @ValidateNested()
-    _code: CodeValueObj;
+        _code: CodeValueObj;
 
     @IsOptional()
     @Type(() => CodeValueObj)
     @ValidateNested()
-    inherit: CodeValueObj;
+        inherit: CodeValueObj;
 }
 
 export class Template {
     @IsDefined()
     @IsArray()
-    value: [];
+        value: [];
 }
 
 export class Catalog {
@@ -75,12 +75,12 @@ export class Catalog {
     @IsNotEmpty()
     @Type(() => CatalogItem)
     @ValidateNested()
-    catalogItem: CatalogItem;
+        catalogItem: CatalogItem;
 
     @IsDefined()
     @Type(() => Template)
     @ValidateNested()
-    template: Template;
+        template: Template;
 }
 
 export class CatalogType {
@@ -90,17 +90,17 @@ export class CatalogType {
     @IsNumber()
     @Min(UpdateSetType.ADD)
     @Max(UpdateSetType.DELETE)
-    type: number;
+        type: number;
 
     @IsDefined()
     @IsNumber()
     @Transform(transformToNumber)
-    catalogCode: number;
+        catalogCode: number;
 
     @IsDefined()
     @Type(() => Catalog)
     @ValidateNested()
-    template: Catalog;
+        template: Catalog;
 }
 
 export default class PutStoreEventReq {
@@ -110,14 +110,14 @@ export default class PutStoreEventReq {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    name: string;
+        name: string;
 
     /**
      * 説明
      */
     @IsOptional()
     @IsString()
-    description: string;
+        description: string;
 
     /**
      * カタログリスト
@@ -126,18 +126,18 @@ export default class PutStoreEventReq {
     @IsArray()
     @Type(() => CatalogType)
     @ValidateNested({ each: true })
-    catalog: CatalogType[];
+        catalog: CatalogType[];
 
     /**
      * その他
      */
     @IsOptional()
-    appendix: any;
+        appendix: any;
 
     /**
      * 下書き
      */
     @IsOptional()
     @IsBoolean()
-    isDraft: boolean;
+        isDraft: boolean;
 }

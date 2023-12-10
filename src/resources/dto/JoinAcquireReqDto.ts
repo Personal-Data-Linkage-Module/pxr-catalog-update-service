@@ -14,11 +14,11 @@ export default class JoinAcquireReqDto {
     @IsBoolean()
     @Transform(transformToBooleanFromString)
     @Expose({ name: 'is_request' })
-    isRequest: boolean;
+        isRequest: boolean;
 
     @IsOptional()
     @IsBoolean()
     @Transform(transformToBooleanFromString)
     @Expose({ name: 'in_approved' })
-    inApproved: boolean;
+        inApproved: boolean;
 }

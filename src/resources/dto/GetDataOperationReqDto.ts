@@ -23,23 +23,23 @@ export default class GetDataOperationReqDto {
     @IsOptional()
     @IsBoolean()
     @Expose({ name: 'approval_request' })
-    approvalRequest: boolean = false;
+        approvalRequest: boolean = false;
 
     // 承認済を含むかどうか
     @Transform(transformToBooleanFromString)
     @IsOptional()
     @IsBoolean()
-    approved: boolean = false;
+        approved: boolean = false;
 
     // 取得開始位置
     @IsOptional()
     @IsNumber()
     @Min(0)
-    offset: number = 0;
+        offset: number = 0;
 
     // 取得件数
     @IsOptional()
     @IsNumber()
     @Max(50)
-    limit: number = 10;
+        limit: number = 10;
 }

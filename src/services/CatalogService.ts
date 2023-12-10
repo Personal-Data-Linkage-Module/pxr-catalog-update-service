@@ -203,7 +203,7 @@ export default class CatalogService {
                 'Content-Length': Buffer.byteLength(body),
                 session: operator.encoded
             },
-            body: body
+            body
         };
 
         try {
@@ -249,7 +249,7 @@ export default class CatalogService {
                 'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(body)
             },
-            body: body
+            body
         };
         options.headers.session = operator.encoded;
 
@@ -357,7 +357,7 @@ export default class CatalogService {
                 'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(body)
             },
-            body: body
+            body
         };
         options.headers.session = operator.encoded;
 
@@ -460,7 +460,7 @@ export default class CatalogService {
                 'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(body)
             },
-            body: body
+            body
         };
         options.headers.session = operator.encoded;
 
@@ -491,8 +491,8 @@ export default class CatalogService {
     static async postUpdateSetRequest (operator: OperatorDomain, id: number, approvalActor: number): Promise<UpdateSetRequestPostResDto> {
         const url = config['app']['catalog']['postUpdateSetRequest'];
         const body = JSON.stringify({
-            id: id,
-            approvalActor: approvalActor
+            id,
+            approvalActor
         });
         const options: request.CoreOptions = {
             headers: {
@@ -500,7 +500,7 @@ export default class CatalogService {
                 'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(body)
             },
-            body: body
+            body
         };
         options.headers.session = operator.encoded;
 
@@ -530,8 +530,8 @@ export default class CatalogService {
     static async postUpdateSetApproval (operator: OperatorDomain, id: number, status: number, comment: string): Promise<UpdateSetApprovalPostResDto> {
         const url = config['app']['catalog']['postUpdateSetApproval'] + id;
         const body = JSON.stringify({
-            status: status,
-            comment: comment
+            status,
+            comment
         });
         const options: request.CoreOptions = {
             headers: {
@@ -539,7 +539,7 @@ export default class CatalogService {
                 'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(body)
             },
-            body: body
+            body
         };
         options.headers.session = operator.encoded;
 

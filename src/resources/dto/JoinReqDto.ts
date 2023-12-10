@@ -19,11 +19,11 @@ import { transformToBooleanFromString } from '../../common/Transform';
 export class CodeObject {
     @IsNumber()
     @IsDefined()
-    code: number;
+        code: number;
 
     @IsNumber()
     @IsDefined()
-    version: number;
+        version: number;
 }
 
 export class Actor extends CodeObject {
@@ -32,33 +32,33 @@ export class Actor extends CodeObject {
     @IsArray()
     @ValidateNested({ each: true })
     @Type(() => CodeObject)
-    app: CodeObject[];
+        app: CodeObject[];
 
     @IsOptional()
     @ArrayNotEmpty()
     @IsArray()
     @ValidateNested({ each: true })
     @Type(() => CodeObject)
-    wf: CodeObject[];
+        wf: CodeObject[];
 }
 
 export default class JoinReqDto {
     @IsNumber()
     @IsOptional()
-    id: number;
+        id: number;
 
     @Type(() => CodeObject)
     @ValidateNested()
     @IsDefined()
-    region: CodeObject;
+        region: CodeObject;
 
     @Type(() => Actor)
     @ValidateNested()
     @IsDefined()
-    actor: Actor;
+        actor: Actor;
 
     @IsBoolean()
     @IsDefined()
     @Transform(transformToBooleanFromString)
-    isDraft: boolean;
+        isDraft: boolean;
 }

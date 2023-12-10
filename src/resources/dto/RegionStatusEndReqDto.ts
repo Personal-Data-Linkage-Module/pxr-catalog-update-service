@@ -12,12 +12,12 @@ export class CodeObject {
     @Transform(transformToNumber)
     @IsDefined()
     @IsNumber()
-    _value: number;
+        _value: number;
 
     @Transform(transformToNumber)
     @IsDefined()
     @IsNumber()
-    _ver: number;
+        _ver: number;
 }
 
 /**
@@ -27,13 +27,13 @@ export default class RegionStatusEndReqDto {
     @Type(() => CodeObject)
     @ValidateNested()
     @IsDefined()
-    regionCode: CodeObject;
+        regionCode: CodeObject;
 
     @IsString()
     @IsDefined()
-    requestComment: string;
+        requestComment: string;
 
     @IsString()
     @IsDefined()
-    endDate: string;
+        endDate: string;
 }

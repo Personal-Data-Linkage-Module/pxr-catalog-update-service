@@ -152,11 +152,11 @@ export default class StoreEventService {
 
         // レスポンスを生成
         const response = {
-            shareCatalog: shareCatalog,
-            shareUUID: shareUUID,
-            shareCode: shareCode,
-            shareUUIDList: shareUUIDList,
-            shareCodeList: shareCodeList
+            shareCatalog,
+            shareUUID,
+            shareCode,
+            shareUUIDList,
+            shareCodeList
         };
         return response;
     }

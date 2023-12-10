@@ -18,45 +18,45 @@ import {
 export default class DataOperationManage extends BaseEntity {
     /** id */
     @PrimaryGeneratedColumn({ type: 'bigint' })
-    id: number;
+        id: number;
 
     /** template */
     @Column({ type: 'text' })
-    template: string;
+        template: string;
 
     /** 呼出元アクターコード */
     @Column({ type: 'bigint', nullable: false, name: 'application_actor_code' })
-    applicationActorCode: number;
+        applicationActorCode: number;
 
     /** 呼出元ブロックコード */
     @Column({ type: 'bigint', nullable: false, name: 'application_block_code' })
-    applicationBlockCode: number;
+        applicationBlockCode: number;
 
     /** 申請日時 */
     @Column({ type: 'timestamp without time zone', name: 'application_at' })
-    applicationAt: Date;
+        applicationAt: Date;
 
     /** 下書きフラグ */
     @Column({ type: 'boolean', nullable: false, default: false, name: 'is_draft' })
-    isDraft: boolean;
+        isDraft: boolean;
 
     /** 無効フラグ */
     @Column({ type: 'boolean', nullable: false, default: false, name: 'is_disabled' })
-    isDisabled: boolean;
+        isDisabled: boolean;
 
     /** 登録者 */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'created_by' })
-    createdBy: string;
+        createdBy: string;
 
     /** 登録日時 */
     @CreateDateColumn({ type: 'timestamp without time zone', nullable: false, default: 'NOW()', name: 'created_at' })
-    createdAt: Date;
+        createdAt: Date;
 
     /** 更新者 */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'updated_by' })
-    updatedBy: string;
+        updatedBy: string;
 
     /** 更新日時 */
     @UpdateDateColumn({ type: 'timestamp without time zone', nullable: false, default: 'NOW()', onUpdate: 'NOW()', name: 'updated_at' })
-    updatedAt: Date;
+        updatedAt: Date;
 }

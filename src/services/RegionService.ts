@@ -215,14 +215,16 @@ export default class RegionService {
     }
 
     private static createData (result: RegionManage, data: any, method: string) {
-        const region = result.regionCode ? {
-            _value: Number(result.regionCode),
-            _ver: Number(result.regionVersion)
-        } : null;
+        const region = result.regionCode
+            ? {
+                _value: Number(result.regionCode),
+                _ver: Number(result.regionVersion)
+            }
+            : null;
         data = {
             id: Number(result.id),
             type: Number(result.type),
-            region: region,
+            region,
             approvalActor: {
                 _value: Number(result.approvalActorCode),
                 _ver: Number(result.approvalActorVersion)

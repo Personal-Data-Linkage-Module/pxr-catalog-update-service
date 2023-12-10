@@ -14,5 +14,5 @@ export default class RegionAcquireReqDto {
     @IsBoolean()
     @Transform(transformToBooleanFromString)
     @Expose({ name: 'in_approved' })
-    inApproved: boolean;
+        inApproved: boolean;
 }

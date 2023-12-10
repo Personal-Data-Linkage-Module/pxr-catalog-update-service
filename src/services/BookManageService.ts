@@ -21,7 +21,7 @@ export default class {
     static async postSettingsUpdate (codes: any[], operator: OperatorDomain) {
         const url = 'http://localhost:3005/book-manage/settings/update';
         const body = JSON.stringify({
-            codes: codes
+            codes
         });
         const option: request.CoreOptions = {
             headers: {
@@ -30,7 +30,7 @@ export default class {
                 'content-length': Buffer.byteLength(body),
                 session: operator.encoded
             },
-            body: body
+            body
         };
 
         try {
@@ -53,8 +53,8 @@ export default class {
     static async updatePlatformTermOfUsePlatform (code: number, version: number, operator: OperatorDomain) {
         const url = 'http://localhost:3005/book-manage/term_of_use/platform/update';
         const body = JSON.stringify({
-            code: code,
-            version: version
+            code,
+            version
         });
         const option: request.CoreOptions = {
             headers: {
@@ -63,7 +63,7 @@ export default class {
                 'content-length': Buffer.byteLength(body),
                 session: operator.encoded
             },
-            body: body
+            body
         };
 
         try {
@@ -89,8 +89,8 @@ export default class {
     static async updateRegionTermOfUsePlatform (code: number, version: number, operator: OperatorDomain) {
         const url = 'http://localhost:3005/book-manage/term_of_use/region/update';
         const body = JSON.stringify({
-            code: code,
-            version: version
+            code,
+            version
         });
         const option: request.CoreOptions = {
             headers: {
@@ -99,7 +99,7 @@ export default class {
                 'content-length': Buffer.byteLength(body),
                 session: operator.encoded
             },
-            body: body
+            body
         };
 
         try {
@@ -139,7 +139,7 @@ export default class {
                 'content-length': Buffer.byteLength(body),
                 session: dto.getOperator().encoded
             },
-            body: body
+            body
         };
 
         try {
@@ -178,7 +178,7 @@ export default class {
                 'content-length': Buffer.byteLength(body),
                 session: dto.getOperator().encoded
             },
-            body: body
+            body
         };
         try {
             const result = await doPostRequest(url, option);

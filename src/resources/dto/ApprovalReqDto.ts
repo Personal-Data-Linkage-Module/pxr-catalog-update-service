@@ -17,9 +17,9 @@ export default class ApprovalReqDto {
     @Transform(transformToNumber)
     @IsDefined()
     @IsNumber()
-    status: number;
+        status: number;
 
     @IsOptional()
     @IsString()
-    comment: string;
+        comment: string;
 }

@@ -12,7 +12,7 @@ export class CodeObject {
     @IsNumber()
     @IsDefined()
     @Transform(transformToNumber)
-    _value: number;
+        _value: number;
 
     // _ver: number;
 }
@@ -23,7 +23,7 @@ export class Cooperation {
     @IsNotEmptyObject()
     @Type(type => CodeObject)
     @ValidateNested()
-    actor: CodeObject;
+        actor: CodeObject;
 
     // app: CodeObject;
 
@@ -37,7 +37,7 @@ export class Cooperation {
 export default class {
     @IsString()
     @IsNotEmpty()
-    pxrId: string;
+        pxrId: string;
 
     // attributes: any;
 
@@ -45,5 +45,5 @@ export default class {
     @IsArray()
     @Type(type => Cooperation)
     @ValidateNested()
-    cooperation: Cooperation[];
+        cooperation: Cooperation[];
 }

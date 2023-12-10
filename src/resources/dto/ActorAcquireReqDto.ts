@@ -21,19 +21,19 @@ export default class ActorAcquireReqDto {
     @IsOptional()
     @IsNumber()
     @Transform(transformToNumber)
-    code: number;
+        code: number;
 
     @IsOptional()
     @IsNumber()
     @Transform(transformToNumber)
-    ver: number;
+        ver: number;
 
     @IsString()
     @IsDefined()
-    actorType: string;
+        actorType: string;
 
     @Transform(transformToBooleanFromString)
     @IsBoolean()
     @IsOptional()
-    approved: boolean;
+        approved: boolean;
 }

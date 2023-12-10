@@ -27,23 +27,23 @@ export class CodeVersionObject {
     @IsNumber()
     @IsNotEmpty()
     @IsOptional()
-    _value: number;
+        _value: number;
 
     @Transform(transformToNumber)
     @IsNumber()
     @IsOptional()
-    _ver: number;
+        _ver: number;
 }
 
 export class NameSpace {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    ns: string = null;
+        ns: string = null;
 
     @IsOptional()
     @IsString()
-    description: string = null;
+        description: string = null;
 
     /**
      * コンストラクタ
@@ -64,20 +64,20 @@ export class NameSpaceType {
     @IsNumber()
     @Min(UpdateSetType.ADD)
     @Max(UpdateSetType.DELETE)
-    type: number = null;
+        type: number = null;
 
     @IsOptional()
     @IsNumber()
-    nsId: number = null;
+        nsId: number = null;
 
     @IsOptional()
     @IsString()
-    comment: string = null;
+        comment: string = null;
 
     @IsOptional()
     @ValidateNested()
     @Transform(template => template ? new NameSpace(template) : null)
-    template: NameSpace = null;
+        template: NameSpace = null;
 
     /**
      * コンストラクタ
@@ -96,16 +96,16 @@ export class NameSpaceType {
 export class Catalog {
     @IsOptional()
     @IsNotEmpty()
-    catalogItem: {} = null;
+        catalogItem: {} = null;
 
     @IsOptional()
-    template: {} = null;
+        template: {} = null;
 
     @IsOptional()
-    inner: {} = null;
+        inner: {} = null;
 
     @IsOptional()
-    attribute: {} = null;
+        attribute: {} = null;
 
     /**
      * コンストラクタ
@@ -127,20 +127,20 @@ export class CatalogType {
     @IsNumber()
     @Min(UpdateSetType.ADD)
     @Max(UpdateSetType.DELETE)
-    type: number = null;
+        type: number = null;
 
     @IsOptional()
     @IsNumber()
-    catalogCode: number = null;
+        catalogCode: number = null;
 
     @IsOptional()
     @IsString()
-    comment: string = null;
+        comment: string = null;
 
     @IsOptional()
     @ValidateNested()
     @Transform(template => template ? new Catalog(template) : null)
-    template: Catalog = null;
+        template: Catalog = null;
 
     /**
      * コンストラクタ
@@ -163,14 +163,14 @@ export default class CatalogUpdateReqDto {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    name: string = null;
+        name: string = null;
 
     /**
      * 説明
      */
     @IsOptional()
     @IsString()
-    description: string = null;
+        description: string = null;
 
     /**
      * カタログリスト
@@ -190,18 +190,18 @@ export default class CatalogUpdateReqDto {
         }
         return list;
     })
-    catalog: CatalogType[] = null;
+        catalog: CatalogType[] = null;
 
     /**
      * その他
      */
     @IsOptional()
-    appendix: {} = null;
+        appendix: {} = null;
 
     /**
      * 下書き
      */
     @IsOptional()
     @IsBoolean()
-    isDraft: boolean = null;
+        isDraft: boolean = null;
 }

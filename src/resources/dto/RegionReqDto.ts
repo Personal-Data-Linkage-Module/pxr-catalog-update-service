@@ -11,21 +11,21 @@ import { UpdateSetType } from "../../common/UpdateSet";
 export class CatalogItem {
     @IsOptional()
     @IsString()
-    ns: string = null;
+        ns: string = null;
 
     @IsOptional()
     @IsString()
-    name: string = null;
+        name: string = null;
 
     @IsOptional()
     @IsString()
-    description: string = null;
+        description: string = null;
 
     @IsEmpty()
-    _code: number = null;
+        _code: number = null;
 
     @IsOptional()
-    inherit: {} = null;
+        inherit: {} = null;
 
     /**
      * コンストラクタ
@@ -45,16 +45,16 @@ export class CatalogItem {
 export class Catalog {
     @IsOptional()
     @Transform(catalogItem => catalogItem ? new CatalogItem(catalogItem) : null)
-    catalogItem: CatalogItem = null;
+        catalogItem: CatalogItem = null;
 
     @IsOptional()
-    template: {} = null;
+        template: {} = null;
 
     @IsOptional()
-    inner: {} = null;
+        inner: {} = null;
 
     @IsOptional()
-    attribute: {} = null;
+        attribute: {} = null;
 
     /**
      * コンストラクタ
@@ -74,19 +74,19 @@ export class CatalogObject {
     @IsOptional()
     @IsNumber()
     @Equals(UpdateSetType.ADD)
-    type: number = null;
+        type: number = null;
 
     @IsEmpty()
-    catalogCode: number = null;
+        catalogCode: number = null;
 
     @IsOptional()
     @IsString()
-    comment: string = null;
+        comment: string = null;
 
     @IsOptional()
     @ValidateNested()
     @Transform(template => template ? new Catalog(template) : null)
-    template: Catalog = null;
+        template: Catalog = null;
 
     /**
      * コンストラクタ
@@ -109,17 +109,17 @@ export default class RegionReqDto {
     /** ID */
     @IsOptional()
     @IsNumber()
-    id: number;
+        id: number;
 
     /** 名称 */
     @IsDefined()
     @IsString()
-    name: string = null;
+        name: string = null;
 
     /** 説明 */
     @IsOptional()
     @IsString()
-    description: string = null;
+        description: string = null;
 
     /** カタログリスト */
     @IsOptional()
@@ -137,14 +137,14 @@ export default class RegionReqDto {
         }
         return list;
     })
-    catalogObject: CatalogObject[] = null;
+        catalogObject: CatalogObject[] = null;
 
     /** その他 */
     @IsOptional()
-    appendix: {} = null;
+        appendix: {} = null;
 
     /** 下書きフラグ */
     @IsDefined()
     @IsBoolean()
-    isDraft: boolean = null;
+        isDraft: boolean = null;
 }

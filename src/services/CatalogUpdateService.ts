@@ -237,10 +237,10 @@ export default class CatalogUpdateService {
             throw new AppError(message.REQUEST_PARAMETER_INVALID, 400);
         }
         const resonse = {
-            nsReg: nsReg,
-            catalog: catalog,
-            catalogCode: catalogCode,
-            catalogVer: catalogVer
+            nsReg,
+            catalog,
+            catalogCode,
+            catalogVer
         };
         return resonse;
     }

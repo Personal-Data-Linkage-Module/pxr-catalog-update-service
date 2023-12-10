@@ -22,43 +22,43 @@ export default class AuditReportManage extends BaseEntity {
 
     /** 監査対象のアクターコード */
     @Column({ type: 'bigint', name: 'target_actor_code', nullable: false })
-    targetActorCode: number;
+        targetActorCode: number;
 
     /** 監査対象のアクターバージョン */
     @Column({ type: 'bigint', name: 'target_actor_version', nullable: false })
-    targetActorVersion: number;
+        targetActorVersion: number;
 
     /** 監査アクターコード */
     @Column({ type: 'bigint', name: 'audit_actor_code', nullable: false })
-    auditActorCode: number;
+        auditActorCode: number;
 
     /** 監査アクターバージョン */
     @Column({ type: 'bigint', name: 'audit_actor_version', nullable: false })
-    auditActorVersion: number;
+        auditActorVersion: number;
 
     /** 監査者 */
     @Column({ type: 'varchar', length: 255, nullable: false })
-    auditor: string;
+        auditor: string;
 
     /** レポートテンプレート */
     @Column({ type: 'text', name: 'report_template' })
-    reportTemplate: string;
+        reportTemplate: string;
 
     /** レポート登録日 */
     @Column({ type: 'timestamp without time zone', name: 'report_created_at', nullable: false })
-    reportCreatedAt: Date;
+        reportCreatedAt: Date;
 
     /** 下書きフラグ */
     @Column({ type: 'boolean', nullable: false, default: false })
-    isDraft: boolean;
+        isDraft: boolean;
 
     /** 無効フラグ */
     @Column({ type: 'boolean', nullable: false, default: false, name: 'is_disabled' })
-    isDisabled: boolean = false;
+        isDisabled: boolean = false;
 
     /** 登録者 */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'created_by' })
-    createdBy: string = '';
+        createdBy: string = '';
 
     /** 登録日時 */
     @CreateDateColumn({ type: 'timestamp without time zone', name: 'created_at' })
@@ -66,7 +66,7 @@ export default class AuditReportManage extends BaseEntity {
 
     /** 更新者 */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'updated_by' })
-    updatedBy: string = '';
+        updatedBy: string = '';
 
     /** 更新日時 */
     @UpdateDateColumn({ type: 'timestamp without time zone', name: 'updated_at', onUpdate: 'now()' })
