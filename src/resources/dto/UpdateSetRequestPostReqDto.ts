@@ -18,7 +18,7 @@ export default class UpdateSetRequestPostReqDto {
      */
     @IsDefined()
     @IsNotEmpty()
-    @Transform(id => parseInt(id))
+    @Transform(({ value }) => { return parseInt(value); })
     @IsNumber()
     @Min(1)
         id: number = null;
@@ -28,7 +28,7 @@ export default class UpdateSetRequestPostReqDto {
      */
     @IsDefined()
     @IsNotEmpty()
-    @Transform(approvalActor => parseInt(approvalActor))
+    @Transform(({ value }) => { return parseInt(value); })
     @IsNumber()
     @Min(1)
         approvalActor: number = null;

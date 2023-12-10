@@ -60,7 +60,7 @@ export class NameSpace {
 export class NameSpaceType {
     @IsOptional()
     @IsNotEmpty()
-    @Transform(type => parseInt(type))
+    @Transform(({ value }) => { return parseInt(value); })
     @IsNumber()
     @Min(UpdateSetType.ADD)
     @Max(UpdateSetType.DELETE)
@@ -123,7 +123,7 @@ export class Catalog {
 export class CatalogType {
     @IsOptional()
     @IsNotEmpty()
-    @Transform(type => parseInt(type))
+    @Transform(({ value }) => { return parseInt(value); })
     @IsNumber()
     @Min(UpdateSetType.ADD)
     @Max(UpdateSetType.DELETE)
