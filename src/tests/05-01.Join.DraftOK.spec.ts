@@ -3,14 +3,15 @@ Released under the MIT license.
 https://opensource.org/licenses/mit-license.php
 */
 import * as supertest from 'supertest';
-import Application from '../index';
+import { Application } from '../resources/config/Application';
 import Common, { Url } from './Common';
 import * as express from 'express';
 // eslint-disable-next-line no-unused-vars
 import { Server } from 'net';
 
 // 対象アプリケーションを取得
-const expressApp = Application.express.app;
+const app = new Application();
+const expressApp = app.express.app;
 const common = new Common();
 
 // サーバをlisten
@@ -609,6 +610,7 @@ let _notification: any;
 
 let id = 0;
 
+app.start();
 /**
  * カタログ更新 API のユニットテスト
  */
@@ -617,7 +619,6 @@ describe('CatalogUpdate API', () => {
    * 全テスト実行後の前処理
    */
   beforeAll(async () => {
-    await Application.start()
     // DB接続
     await common.connect();
     // DB初期化
@@ -662,8 +663,9 @@ describe('CatalogUpdate API', () => {
    * 全テスト実行後の後処理
    */
   afterAll(async () => {
+    common.disconnect();
     // サーバ停止
-    Application.stop();
+    app.stop();
     _catalogServer._server.close();
     _operatorServer._server.close();
     _notification._server.close();

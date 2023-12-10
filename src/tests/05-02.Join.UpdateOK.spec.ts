@@ -1263,9 +1263,6 @@ describe('CatalogUpdate API', () => {
   afterAll(async () => {
     // サーバ停止
     Application.stop();
-    _operatorServer._server.close();
-    _catalogServer._server.close();
-    _notification._server.close();
   });
 
   /**

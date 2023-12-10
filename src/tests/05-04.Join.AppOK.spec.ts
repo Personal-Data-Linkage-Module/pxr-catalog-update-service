@@ -3,7 +3,7 @@ Released under the MIT license.
 https://opensource.org/licenses/mit-license.php
 */
 import * as supertest from 'supertest';
-import Application from '../index';
+import { Application } from '../resources/config/Application';
 import Common, { Url } from './Common';
 import * as express from 'express';
 // eslint-disable-next-line no-unused-vars
@@ -13,7 +13,8 @@ import Db from './Db';
 const Message = Config.ReadConfig('./config/message.json');
 
 // 対象アプリケーションを取得
-const expressApp = Application.express.app;
+const app = new Application();
+const expressApp = app.express.app;
 const common = new Common();
 
 // オペレータサーバー
@@ -606,6 +607,7 @@ let _operatorServer: any;
 let _catalogServer: any;
 let _proxyServer: any;
 
+app.start();
 /**
  * カタログ更新 API のユニットテスト
  */
@@ -614,7 +616,6 @@ describe('CatalogUpdate API', () => {
    * 全テスト実行後の前処理
    */
   beforeAll(async () => {
-    await Application.start()
     // DB接続
     await common.connect();
     // DB初期化
@@ -629,7 +630,7 @@ describe('CatalogUpdate API', () => {
    */
   afterAll(async () => {
     // サーバ停止
-    Application.stop();
+    app.stop();
     _operatorServer._server.close();
     _catalogServer._server.close();
     _proxyServer._server.close();

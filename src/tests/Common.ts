@@ -2,7 +2,8 @@
 Released under the MIT license.
 https://opensource.org/licenses/mit-license.php
 */
-import Db from './Db';
+import { Connection } from 'typeorm';
+import { connectDatabase } from '../common/Connection';
 import path = require('path');
 import fs = require('fs');
 
@@ -113,24 +114,14 @@ export namespace Url {
  * テスト用共通クラス
  */
 export default class Common {
-    /**
-     * DBオブジェクトを取得
-     */
-    private db: Db = null;
-
-    /**
-     * コンストラクタ
-     */
-    public constructor () {
-        this.db = new Db();
-    }
+    private conn: Connection;
 
     /**
      * SQL実行
      * @param fileName
      */
     public async connect () {
-        await this.db.Connect();
+        this.conn = await connectDatabase();
     }
 
     /**
@@ -138,7 +129,7 @@ export default class Common {
      * @param fileName
      */
     public async disconnect () {
-        // await this.db.Disconnect();
+        this.conn.destroy();
     }
 
     /**
@@ -156,7 +147,7 @@ export default class Common {
         fs.closeSync(fd);
 
         // DBを初期化
-        await this.db.Query(sql);
+        await (await connectDatabase()).query(sql);
     }
 
     /**
@@ -165,6 +156,6 @@ export default class Common {
      */
     public async executeSqlString (sql: string) {
         // DBを初期化
-        await this.db.Query(sql);
+        await (await connectDatabase()).query(sql);
     }
 }
