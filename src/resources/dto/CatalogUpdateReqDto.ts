@@ -23,16 +23,16 @@ import { transformToNumber } from '../../common/Transform';
  * PUT: 利用規約更新
  */
 export class CodeVersionObject {
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsNumber()
     @IsNotEmpty()
     @IsOptional()
         _value: number;
 
-    @Transform(transformToNumber)
+        @Transform(({ value }) => { return transformToNumber(value); })
     @IsNumber()
     @IsOptional()
-        _ver: number;
+            _ver: number;
 }
 
 export class NameSpace {
@@ -76,7 +76,7 @@ export class NameSpaceType {
 
     @IsOptional()
     @ValidateNested()
-    @Transform(template => template ? new NameSpace(template) : null)
+    @Transform(({ value }) => { return value ? new NameSpace(value) : null; })
         template: NameSpace = null;
 
     /**
@@ -139,7 +139,7 @@ export class CatalogType {
 
     @IsOptional()
     @ValidateNested()
-    @Transform(template => template ? new Catalog(template) : null)
+    @Transform(({ value }) => { return value ? new Catalog(value) : null; })
         template: Catalog = null;
 
     /**
@@ -178,15 +178,15 @@ export default class CatalogUpdateReqDto {
     @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
-    @Transform(catalogList => {
+    @Transform(({ value }) => {
         let list: CatalogType[] = null;
-        if (catalogList && Array.isArray(catalogList)) {
+        if (value && Array.isArray(value)) {
             list = [];
-            for (let index = 0; index < catalogList.length; index++) {
-                list.push(new CatalogType(catalogList[index]));
+            for (let index = 0; index < value.length; index++) {
+                list.push(new CatalogType(value[index]));
             }
         } else {
-            return catalogList;
+            return value;
         }
         return list;
     })

@@ -44,7 +44,7 @@ export class CatalogItem {
 
 export class Catalog {
     @IsOptional()
-    @Transform(catalogItem => catalogItem ? new CatalogItem(catalogItem) : null)
+    @Transform(({ value }) => { return value ? new CatalogItem(value) : null; })
         catalogItem: CatalogItem = null;
 
     @IsOptional()
@@ -85,7 +85,7 @@ export class CatalogObject {
 
     @IsOptional()
     @ValidateNested()
-    @Transform(template => template ? new Catalog(template) : null)
+    @Transform(({ value }) => { return value ? new Catalog(value) : null; })
         template: Catalog = null;
 
     /**
@@ -125,15 +125,15 @@ export default class RegionReqDto {
     @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
-    @Transform(catalogList => {
+    @Transform(({ value }) => {
         let list: CatalogObject[] = null;
-        if (catalogList && Array.isArray(catalogList)) {
+        if (value && Array.isArray(value)) {
             list = [];
-            for (let index = 0; index < catalogList.length; index++) {
-                list.push(new CatalogObject(catalogList[index]));
+            for (let index = 0; index < value.length; index++) {
+                list.push(new CatalogObject(value[index]));
             }
         } else {
-            return catalogList;
+            return value;
         }
         return list;
     })

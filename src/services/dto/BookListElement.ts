@@ -11,7 +11,7 @@ import { transformToNumber } from '../../common/Transform';
 export class CodeObject {
     @IsNumber()
     @IsDefined()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         _value: number;
 
     // _ver: number;

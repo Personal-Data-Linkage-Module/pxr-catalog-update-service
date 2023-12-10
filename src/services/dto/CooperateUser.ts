@@ -20,17 +20,17 @@ export class User {
 export default class {
     @IsNumber()
     @IsDefined()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         actor: number;
 
     @IsNumber()
     @IsOptional()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         app: number;
 
     @IsNumber()
     @IsOptional()
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
         wf: number;
 
     @IsOptional()

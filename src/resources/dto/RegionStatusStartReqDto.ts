@@ -9,12 +9,12 @@ import { transformToNumber } from '../../common/Transform';
 /* eslint-enable */
 
 export class CodeObject {
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsDefined()
     @IsNumber()
         _value: number;
 
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsDefined()
     @IsNumber()
         _ver: number;

@@ -12,13 +12,13 @@ import { transformToBooleanFromString } from '../../common/Transform';
 export default class JoinAcquireReqDto {
     @IsOptional()
     @IsBoolean()
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
     @Expose({ name: 'is_request' })
         isRequest: boolean;
 
     @IsOptional()
     @IsBoolean()
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
     @Expose({ name: 'in_approved' })
         inApproved: boolean;
 }

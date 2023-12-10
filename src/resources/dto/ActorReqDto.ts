@@ -30,12 +30,12 @@ export class Template {
 }
 
 export class CodeObject {
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsOptional()
     @IsNumber()
         _value: number;
 
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsOptional()
     @IsNumber()
         _ver: number;
@@ -88,7 +88,7 @@ export class CatalogObject {
  */
 export default class ActorReqDto {
     /** ID */
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsNumber()
     @IsOptional()
         id?: number;
@@ -112,7 +112,7 @@ export default class ActorReqDto {
         approvalActor: CodeObject;
 
     /** 下書きフラグ */
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
     @IsDefined()
     @IsBoolean()
         isDraft: boolean;

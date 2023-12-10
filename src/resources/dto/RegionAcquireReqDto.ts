@@ -12,7 +12,7 @@ import { transformToBooleanFromString } from '../../common/Transform';
 export default class RegionAcquireReqDto {
     @IsOptional()
     @IsBoolean()
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
     @Expose({ name: 'in_approved' })
         inApproved: boolean;
 }

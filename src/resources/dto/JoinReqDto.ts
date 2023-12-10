@@ -59,6 +59,6 @@ export default class JoinReqDto {
 
     @IsBoolean()
     @IsDefined()
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
         isDraft: boolean;
 }

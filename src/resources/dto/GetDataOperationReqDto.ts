@@ -19,14 +19,14 @@ import { transformToBooleanFromString } from '../../common/Transform';
  */
 export default class GetDataOperationReqDto {
     // 承認依頼
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
     @IsOptional()
     @IsBoolean()
     @Expose({ name: 'approval_request' })
         approvalRequest: boolean = false;
 
     // 承認済を含むかどうか
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
     @IsOptional()
     @IsBoolean()
         approved: boolean = false;
