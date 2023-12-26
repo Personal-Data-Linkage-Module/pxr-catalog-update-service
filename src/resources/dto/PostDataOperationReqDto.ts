@@ -96,31 +96,31 @@ export default class PostDataOperationReqDto {
     // ID
     @IsOptional()
     @IsNumber()
-    id?: number;
+        id?: number;
 
     // 名称
     @IsDefined()
     @IsString()
     @IsNotEmpty()
-    name: string;
+        name: string;
 
     // 説明
     @IsOptional()
     @IsString()
-    description?: string;
+        description?: string;
 
     // カタログリスト
     @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
-    catalog?: CatalogType[];
+        catalog?: CatalogType[];
 
     // その他
     @IsOptional()
-    appendix?: any;
+        appendix?: any;
 
     // 下書きフラグ
     @IsOptional()
     @IsBoolean()
-    isDraft?: boolean = false;
+        isDraft?: boolean = false;
 }

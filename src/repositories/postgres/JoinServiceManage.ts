@@ -31,27 +31,27 @@ export default class JoinServiceManage extends BaseEntity {
 
     /** Region参加申請管理ID */
     @Column({ type: 'bigint', name: 'join_manage_id', nullable: false })
-    joinManageId: number;
+        joinManageId: number;
 
     /** ステータス */
     @Column({ type: 'smallint', nullable: false })
-    type: number;
+        type: number;
 
     /** 承認アクターコード */
     @Column({ type: 'bigint', nullable: false, name: 'service_code' })
-    serviceCode: number;
+        serviceCode: number;
 
     /** 承認アクターバージョン */
     @Column({ type: 'bigint', nullable: false, name: 'service_version' })
-    serviceVersion: number;
+        serviceVersion: number;
 
     /** 無効フラグ */
     @Column({ type: 'boolean', nullable: false, default: false, name: 'is_disabled' })
-    isDisabled: boolean = false;
+        isDisabled: boolean = false;
 
     /** 登録者 */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'created_by' })
-    createdBy: string = '';
+        createdBy: string = '';
 
     /** 登録日時 */
     @CreateDateColumn({ type: 'timestamp without time zone', name: 'created_at' })
@@ -59,7 +59,7 @@ export default class JoinServiceManage extends BaseEntity {
 
     /** 更新者 */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'updated_by' })
-    updatedBy: string = '';
+        updatedBy: string = '';
 
     /** 更新日時 */
     @UpdateDateColumn({ type: 'timestamp without time zone', name: 'updated_at', onUpdate: 'now()' })
@@ -67,5 +67,5 @@ export default class JoinServiceManage extends BaseEntity {
 
     @ManyToOne(type => JoinManage, joinManage => joinManage.joinServiceManages)
     @JoinColumn({ name: 'join_manage_id', referencedColumnName: 'id' })
-    joinManage: JoinManage;
+        joinManage: JoinManage;
 }

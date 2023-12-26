@@ -15,5 +15,5 @@ import {
 export default class ActorAccreditsReqDto {
     @IsString()
     @IsDefined()
-    actorType: string;
+        actorType: string;
 }

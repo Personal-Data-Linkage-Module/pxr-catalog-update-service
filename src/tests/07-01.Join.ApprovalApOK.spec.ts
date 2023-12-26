@@ -597,8 +597,6 @@ describe('CatalogUpdate API', () => {
         await common.connect();
         // DB初期化
         await common.executeSqlFile('initialData.sql');
-        // DB切断
-        await common.disconnect();
         // 事前データ準備
         await common.executeSqlString(`
             INSERT INTO pxr_catalog_update.join_manage
@@ -694,7 +692,9 @@ describe('CatalogUpdate API', () => {
      * 全テスト実行後の後処理
      */
     afterAll(async () => {
-        // サーバ停止
+      // DB切断
+      await common.disconnect();  
+      // サーバ停止
         Application.stop();
         _operatorServer._server.close();
         _catalogServer._server.close();

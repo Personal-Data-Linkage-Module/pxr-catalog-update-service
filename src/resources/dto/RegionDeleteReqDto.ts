@@ -9,16 +9,16 @@ import { IsBoolean, IsDefined, IsNumber, IsOptional } from "class-validator";
 export default class RegionDeleteReqDto {
     @IsOptional()
     @IsNumber()
-    id: number;
+        id: number;
 
     @IsDefined()
     @IsNumber()
-    regionCode: number;
+        regionCode: number;
 
     @IsOptional()
-    comment: string;
+        comment: string;
 
     @IsDefined()
     @IsBoolean()
-    isDraft: boolean;
+        isDraft: boolean;
 }

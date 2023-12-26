@@ -31,51 +31,51 @@ export default class ActorManage extends BaseEntity {
 
     /** 呼出元アクタカタログーコード */
     @Column({ type: 'bigint', name: 'caller_actor_code' })
-    callerActorCode: number;
+        callerActorCode: number;
 
     /** 呼出元アクターカタログバージョン */
     @Column({ type: 'bigint', name: 'caller_actor_version' })
-    callerActorVersion: number;
+        callerActorVersion: number;
 
     /** 呼出元ブロックカタログコード */
     @Column({ type: 'bigint', name: 'caller_block_code', nullable: false })
-    callerBlockCode: number;
+        callerBlockCode: number;
 
     /** 呼出元ブロックカタログバージョン */
     @Column({ type: 'bigint', name: 'caller_block_version', nullable: false })
-    callerBlockVersion: number;
+        callerBlockVersion: number;
 
     /** テンプレート */
     @Column({ type: 'text' })
-    template: string;
+        template: string;
 
     /** 有効期限 */
     @Column({ type: 'timestamp without time zone', name: 'approval_expire_at', nullable: false })
-    approvalExpireAt: Date;
+        approvalExpireAt: Date;
 
     /** 種別 */
     @Column({ type: 'smallint', nullable: false })
-    type: number;
+        type: number;
 
     /** 申請日時 */
     @Column({ type: 'timestamp without time zone', name: 'applicant_date' })
-    applicantDate: Date;
+        applicantDate: Date;
 
     /** 下書きフラグ */
     @Column({ type: 'boolean', name: 'is_draft', nullable: false, default: false })
-    isDraft: boolean;
+        isDraft: boolean;
 
     /** その他属性 */
     @Column({ type: 'text' })
-    attributes: string;
+        attributes: string;
 
     /** 無効フラグ */
     @Column({ type: 'boolean', nullable: false, default: false, name: 'is_disabled' })
-    isDisabled: boolean = false;
+        isDisabled: boolean = false;
 
     /** 登録者 */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'created_by' })
-    createdBy: string = '';
+        createdBy: string = '';
 
     /** 登録日時 */
     @CreateDateColumn({ type: 'timestamp without time zone', name: 'created_at' })
@@ -83,7 +83,7 @@ export default class ActorManage extends BaseEntity {
 
     /** 更新者 */
     @Column({ type: 'varchar', length: 255, nullable: false, name: 'updated_by' })
-    updatedBy: string = '';
+        updatedBy: string = '';
 
     /** 更新日時 */
     @UpdateDateColumn({ type: 'timestamp without time zone', name: 'updated_at', onUpdate: 'now()' })
@@ -92,5 +92,5 @@ export default class ActorManage extends BaseEntity {
     /** アクター申請承認管理テーブルのレコード */
     @OneToOne(type => ActorApprovalManage, actorApprovalManage => actorApprovalManage.actorManage)
     @JoinColumn({ name: 'id', referencedColumnName: 'actorManageId' })
-    actorApprovalManage: ActorApprovalManage;
+        actorApprovalManage: ActorApprovalManage;
 }

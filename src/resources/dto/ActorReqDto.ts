@@ -22,65 +22,65 @@ import { transformToBooleanFromString, transformToNumber } from '../../common/Tr
 export class Template {
     @Type(() => null)
     @IsOptional()
-    prop: null;
+        prop: null;
 
     @Type(() => null)
     @IsOptional()
-    value: null;
+        value: null;
 }
 
 export class CodeObject {
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsOptional()
     @IsNumber()
-    _value: number;
+        _value: number;
 
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsOptional()
     @IsNumber()
-    _ver: number;
+        _ver: number;
 }
 
 export class CatalogItem {
     @IsNotEmpty()
     @IsString()
-    ns: string;
+        ns: string;
 
     @IsNotEmpty()
     @IsString()
-    name: string;
+        name: string;
 
     description: any;
 
     @Type(() => CodeObject)
     @ValidateNested()
     @IsOptional()
-    _code: CodeObject;
+        _code: CodeObject;
 
     @Type(() => CodeObject)
     @ValidateNested()
     @IsDefined()
-    inherit: CodeObject;
+        inherit: CodeObject;
 
     @Type(() => null)
     @IsOptional()
-    inner: null;
+        inner: null;
 
     @Type(() => null)
     @IsOptional()
-    attribute: null;
+        attribute: null;
 }
 
 export class CatalogObject {
     @IsDefined()
     @Type(() => CatalogItem)
     @ValidateNested()
-    catalogItem: CatalogItem;
+        catalogItem: CatalogItem;
 
     @IsDefined()
     @Type(() => Template)
     @ValidateNested()
-    template: Template;
+        template: Template;
 }
 
 /**
@@ -88,16 +88,16 @@ export class CatalogObject {
  */
 export default class ActorReqDto {
     /** ID */
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsNumber()
     @IsOptional()
-    id?: number;
+        id?: number;
 
     /** アクターカタログ内容 */
     @Type(() => CatalogObject)
     @ValidateNested()
     @IsDefined()
-    actorCatalog: CatalogObject;
+        actorCatalog: CatalogObject;
 
     /** 承認アクター指定 */
     @Type(() => CodeObject)
@@ -109,11 +109,11 @@ export default class ActorReqDto {
             o.actorCatalog.catalogItem.ns + ''
         ).indexOf(ActorType.PXR_ROOT) < 0
     )
-    approvalActor: CodeObject;
+        approvalActor: CodeObject;
 
     /** 下書きフラグ */
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
     @IsDefined()
     @IsBoolean()
-    isDraft: boolean;
+        isDraft: boolean;
 }

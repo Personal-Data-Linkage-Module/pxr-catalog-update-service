@@ -4,7 +4,7 @@ https://opensource.org/licenses/mit-license.php
 */
 /* eslint-disable */
 import * as supertest from 'supertest';
-import Application from '../index';
+import { Application } from '../resources/config/Application';
 import Common, { Url } from './Common';
 import { Session } from './10-00.GetAlliance.TestData';
 import * as express from 'express';
@@ -15,7 +15,8 @@ const Message = Config.ReadConfig('./config/message.json');
 /** eslint-enable  */
 
 // 対象アプリケーションを取得
-const expressApp = Application.express.app;
+const app = new Application();
+const expressApp = app.express.app;
 const common = new Common();
 
 // 対象URLを設定
@@ -66,6 +67,7 @@ export class _StubOperatorServer {
 
 let _operatorServer: _StubOperatorServer;
 
+app.start();
 /**
  * データ処理定義取得 API のユニットテスト
  */
@@ -74,7 +76,6 @@ describe('データ処理定義取得 API', () => {
      * 全テスト実行前の処理
      */
     beforeAll(async () => {
-        await Application.start()
         // DB接続
         await common.connect();
         // 事前データ準備
@@ -127,7 +128,7 @@ describe('データ処理定義取得 API', () => {
      */
     afterAll(async () => {
         // サーバ停止
-        Application.stop();
+        app.stop();
     });
 
     /**

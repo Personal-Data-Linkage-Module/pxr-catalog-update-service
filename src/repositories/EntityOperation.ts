@@ -157,7 +157,8 @@ export default class EntityOperation {
     ) {
         const regionArray =
             Array.isArray(actorCatalog.rawData.template.region)
-                ? actorCatalog.rawData.template.region : [];
+                ? actorCatalog.rawData.template.region
+                : [];
         const connection = await connectDatabase();
         let statusPrefix = '';
         if (!dto.inApproved) {
@@ -234,7 +235,7 @@ export default class EntityOperation {
         const entities = connection.getRepository(JoinServiceManage)
             .createQueryBuilder()
             .where('is_disabled = :isDisabled', { isDisabled: false })
-            .andWhere('join_manage_id = :id', { id: id })
+            .andWhere('join_manage_id = :id', { id })
             .orderBy('id')
             .getMany();
         return entities;
@@ -258,7 +259,7 @@ export default class EntityOperation {
                     'actorApprovalManage',
                     'actorApprovalManage.isDisabled = false'
                 )
-                .andWhere('actorManage.id = :id', { id: id })
+                .andWhere('actorManage.id = :id', { id })
                 .andWhere('actorManage.callerBlockCode = :code', { code: operator.blockCode })
                 .andWhere('actorManage.type = 1')
                 .andWhere('actorManage.isDraft = true')
@@ -290,9 +291,9 @@ export default class EntityOperation {
                         'actorApprovalManage',
                         'actorApprovalManage.isDisabled = false'
                     )
-                    .andWhere('actorManage.id = :id', { id: id })
+                    .andWhere('actorManage.id = :id', { id })
                     .andWhere('actorManage.callerActorCode = :code', { code: actorCode })
-                    .andWhere('actorManage.type = :type', { type: type })
+                    .andWhere('actorManage.type = :type', { type })
                     .andWhere('actorManage.isDisabled = false')
                     .andWhere('(actorManage.approvalExpireAt IS NULL OR actorManage.approvalExpireAt >= :expire)', { expire: new Date() })
                     .getOne();
@@ -306,7 +307,7 @@ export default class EntityOperation {
                         'actorApprovalManage.isDisabled = false'
                     )
                     .andWhere('actorManage.callerActorCode = :code', { code: actorCode })
-                    .andWhere('actorManage.type = :type', { type: type })
+                    .andWhere('actorManage.type = :type', { type })
                     .andWhere('actorManage.isDisabled = false')
                     .andWhere('(actorManage.approvalExpireAt IS NULL OR actorManage.approvalExpireAt >= :expire)', { expire: new Date() })
                     .orderBy('actorApprovalManage.status', 'ASC')
@@ -345,7 +346,7 @@ export default class EntityOperation {
                         'joinApprovalManage',
                         'joinApprovalManage.isDisabled = false'
                     )
-                    .andWhere('joinManage.id = :id', { id: id })
+                    .andWhere('joinManage.id = :id', { id })
                     .andWhere('joinManage.applicantActorCode = :c', { c: operator.actorCode })
                     .andWhere('joinManage.applicantActorVersion = :d', { d: operator.actorVersion })
                     .andWhere('joinManage.isDraft = true')
@@ -696,15 +697,15 @@ export default class EntityOperation {
         const connection = await connectDatabase();
         let sql = connection.getRepository(DataOperationManage)
             .createQueryBuilder()
-            .where('id = :id', { id: id })
+            .where('id = :id', { id })
             .andWhere('is_disabled = :isDisabled', { isDisabled: false });
         if (actorCode) {
             // (actorCodeが無い場合手前の処理でエラーになるため呼ばれることはなく、else分岐は通らない)
-            sql = sql.andWhere('application_actor_code = :actorCode', { actorCode: actorCode });
+            sql = sql.andWhere('application_actor_code = :actorCode', { actorCode });
         }
         if (isDraft) {
             // (isDraft = falseで呼ばれることがないためelse分岐は通らない)
-            sql = sql.andWhere('is_draft = :isDraft', { isDraft: isDraft });
+            sql = sql.andWhere('is_draft = :isDraft', { isDraft });
         }
         const entity = await sql.getOne();
         return entity;
@@ -723,7 +724,7 @@ export default class EntityOperation {
             .createQueryBuilder()
             .where('is_disabled = :isDisabled', { isDisabled: false });
         if (approvalRequest) {
-            sql = sql.andWhere('application_actor_code = :actorCode', { actorCode: actorCode });
+            sql = sql.andWhere('application_actor_code = :actorCode', { actorCode });
         }
         if (!approved) {
             sql = sql.andWhere('is_draft = :isDraft', { isDraft: true });
@@ -857,9 +858,9 @@ export default class EntityOperation {
         const connection = await connectDatabase();
         const entity = await connection.getRepository(RegionManage)
             .createQueryBuilder()
-            .andWhere('applicant_actor_code = :actorCode', { actorCode: actorCode })
-            .andWhere('id = :id', { id: id })
-            .andWhere('type = :type', { type: type })
+            .andWhere('applicant_actor_code = :actorCode', { actorCode })
+            .andWhere('id = :id', { id })
+            .andWhere('type = :type', { type })
             .andWhere('is_disabled = false')
             .getOne();
         return entity;
@@ -879,11 +880,11 @@ export default class EntityOperation {
                 'regionApprovalManage',
                 'regionApprovalManage.isDisabled = false'
             )
-            .andWhere('regionManage.applicantActorCode = :actorCode', { actorCode: actorCode })
-            .andWhere('regionManage.type = :type', { type: type })
-            .andWhere('regionApprovalManage.status = :status', { status: status })
+            .andWhere('regionManage.applicantActorCode = :actorCode', { actorCode })
+            .andWhere('regionManage.type = :type', { type })
+            .andWhere('regionApprovalManage.status = :status', { status })
             .andWhere('regionManage.isDisabled = :isDisabled', { isDisabled: false })
-            .andWhere('regionManage.regionCode = :regionCode', { regionCode: regionCode })
+            .andWhere('regionManage.regionCode = :regionCode', { regionCode })
             .orderBy('regionManage.id')
             .getMany();
         return entities;
@@ -937,8 +938,8 @@ export default class EntityOperation {
                 'regionStatusApprovalManage',
                 'regionStatusApprovalManage.isDisabled = false'
             )
-            .where('regionStatusManage.regionCode = :regionCode', { regionCode: regionCode })
-            .andWhere('regionStatusManage.type = :type', { type: type })
+            .where('regionStatusManage.regionCode = :regionCode', { regionCode })
+            .andWhere('regionStatusManage.type = :type', { type })
             .andWhere('regionStatusManage.isDisabled = :isDisabled', { isDisabled: false })
             .andWhere('regionStatusApprovalManage.status = :status', { status: RegionStatusApprovalManage.APPLYING_STATUS })
             .getMany();

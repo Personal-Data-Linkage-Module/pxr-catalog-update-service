@@ -30,7 +30,7 @@ export default class OperatorService {
                 : cookies[OperatorDomain.TYPE_MANAGER_KEY];
         // Cookieからセッションキーが取得できた場合、オペレーターサービスに問い合わせる
         if (typeof sessionId === 'string' && sessionId.length > 0) {
-            const data = JSON.stringify({ sessionId: sessionId });
+            const data = JSON.stringify({ sessionId });
             const options: request.CoreOptions = {
                 headers: {
                     accept: 'application/json',

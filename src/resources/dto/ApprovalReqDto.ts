@@ -14,12 +14,12 @@ import { transformToNumber } from '../../common/Transform';
 /* eslint-enable */
 
 export default class ApprovalReqDto {
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsDefined()
     @IsNumber()
-    status: number;
+        status: number;
 
     @IsOptional()
     @IsString()
-    comment: string;
+        comment: string;
 }

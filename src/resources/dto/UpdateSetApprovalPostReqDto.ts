@@ -25,21 +25,21 @@ export default class UpdateSetApprovalPostReqDto {
      */
     @IsDefined()
     @IsNotEmpty()
-    @Transform(id => parseInt(id))
+    @Transform(({ value }) => { return parseInt(value); })
     @IsNumber()
     @Min(1)
-    id: number = null;
+        id: number = null;
 
     /**
      * ステータス
      */
     @IsDefined()
     @IsNotEmpty()
-    @Transform(id => parseInt(id))
+    @Transform(({ value }) => { return parseInt(value); })
     @IsNumber()
     @Min(UpdateSetDomain.APPROVAL)
     @Max(UpdateSetDomain.DENY)
-    status: number = null;
+        status: number = null;
 
     /**
      * 承認コメント
@@ -47,5 +47,5 @@ export default class UpdateSetApprovalPostReqDto {
     @IsDefined()
     @IsString()
     @IsOptional()
-    comment: string = null;
+        comment: string = null;
 }

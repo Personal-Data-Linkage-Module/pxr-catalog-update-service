@@ -19,21 +19,21 @@ import { transformToBooleanFromString, transformToNumber } from '../../common/Tr
  */
 export default class ActorRemoveReqDto {
     /** ID */
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsNumber()
     @IsOptional()
-    id?: number;
+        id?: number;
 
     /** 移行先アクター */
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsNumber()
     @IsOptional()
-    migrationActorCode: number | null;
+        migrationActorCode: number | null;
 
     /** 下書きフラグ */
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
     @IsDefined()
     @IsNotEmpty()
     @IsBoolean()
-    isDraft: boolean;
+        isDraft: boolean;
 }

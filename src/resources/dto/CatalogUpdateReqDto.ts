@@ -23,27 +23,27 @@ import { transformToNumber } from '../../common/Transform';
  * PUT: 利用規約更新
  */
 export class CodeVersionObject {
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsNumber()
     @IsNotEmpty()
     @IsOptional()
-    _value: number;
+        _value: number;
 
-    @Transform(transformToNumber)
+        @Transform(({ value }) => { return transformToNumber(value); })
     @IsNumber()
     @IsOptional()
-    _ver: number;
+            _ver: number;
 }
 
 export class NameSpace {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    ns: string = null;
+        ns: string = null;
 
     @IsOptional()
     @IsString()
-    description: string = null;
+        description: string = null;
 
     /**
      * コンストラクタ
@@ -60,24 +60,24 @@ export class NameSpace {
 export class NameSpaceType {
     @IsOptional()
     @IsNotEmpty()
-    @Transform(type => parseInt(type))
+    @Transform(({ value }) => { return parseInt(value); })
     @IsNumber()
     @Min(UpdateSetType.ADD)
     @Max(UpdateSetType.DELETE)
-    type: number = null;
+        type: number = null;
 
     @IsOptional()
     @IsNumber()
-    nsId: number = null;
+        nsId: number = null;
 
     @IsOptional()
     @IsString()
-    comment: string = null;
+        comment: string = null;
 
     @IsOptional()
     @ValidateNested()
-    @Transform(template => template ? new NameSpace(template) : null)
-    template: NameSpace = null;
+    @Transform(({ value }) => { return value ? new NameSpace(value) : null; })
+        template: NameSpace = null;
 
     /**
      * コンストラクタ
@@ -96,16 +96,16 @@ export class NameSpaceType {
 export class Catalog {
     @IsOptional()
     @IsNotEmpty()
-    catalogItem: {} = null;
+        catalogItem: {} = null;
 
     @IsOptional()
-    template: {} = null;
+        template: {} = null;
 
     @IsOptional()
-    inner: {} = null;
+        inner: {} = null;
 
     @IsOptional()
-    attribute: {} = null;
+        attribute: {} = null;
 
     /**
      * コンストラクタ
@@ -123,24 +123,24 @@ export class Catalog {
 export class CatalogType {
     @IsOptional()
     @IsNotEmpty()
-    @Transform(type => parseInt(type))
+    @Transform(({ value }) => { return parseInt(value); })
     @IsNumber()
     @Min(UpdateSetType.ADD)
     @Max(UpdateSetType.DELETE)
-    type: number = null;
+        type: number = null;
 
     @IsOptional()
     @IsNumber()
-    catalogCode: number = null;
+        catalogCode: number = null;
 
     @IsOptional()
     @IsString()
-    comment: string = null;
+        comment: string = null;
 
     @IsOptional()
     @ValidateNested()
-    @Transform(template => template ? new Catalog(template) : null)
-    template: Catalog = null;
+    @Transform(({ value }) => { return value ? new Catalog(value) : null; })
+        template: Catalog = null;
 
     /**
      * コンストラクタ
@@ -163,14 +163,14 @@ export default class CatalogUpdateReqDto {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    name: string = null;
+        name: string = null;
 
     /**
      * 説明
      */
     @IsOptional()
     @IsString()
-    description: string = null;
+        description: string = null;
 
     /**
      * カタログリスト
@@ -178,30 +178,30 @@ export default class CatalogUpdateReqDto {
     @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
-    @Transform(catalogList => {
+    @Transform(({ value }) => {
         let list: CatalogType[] = null;
-        if (catalogList && Array.isArray(catalogList)) {
+        if (value && Array.isArray(value)) {
             list = [];
-            for (let index = 0; index < catalogList.length; index++) {
-                list.push(new CatalogType(catalogList[index]));
+            for (let index = 0; index < value.length; index++) {
+                list.push(new CatalogType(value[index]));
             }
         } else {
-            return catalogList;
+            return value;
         }
         return list;
     })
-    catalog: CatalogType[] = null;
+        catalog: CatalogType[] = null;
 
     /**
      * その他
      */
     @IsOptional()
-    appendix: {} = null;
+        appendix: {} = null;
 
     /**
      * 下書き
      */
     @IsOptional()
     @IsBoolean()
-    isDraft: boolean = null;
+        isDraft: boolean = null;
 }

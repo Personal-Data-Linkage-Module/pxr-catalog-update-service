@@ -20,20 +20,20 @@ import { transformToBooleanFromString, transformToNumber } from '../../common/Tr
 export default class ActorAcquireReqDto {
     @IsOptional()
     @IsNumber()
-    @Transform(transformToNumber)
-    code: number;
+    @Transform(({ value }) => { return transformToNumber(value); })
+        code: number;
 
     @IsOptional()
     @IsNumber()
-    @Transform(transformToNumber)
-    ver: number;
+    @Transform(({ value }) => { return transformToNumber(value); })
+        ver: number;
 
     @IsString()
     @IsDefined()
-    actorType: string;
+        actorType: string;
 
-    @Transform(transformToBooleanFromString)
+    @Transform(({ value }) => { return transformToBooleanFromString(value); })
     @IsBoolean()
     @IsOptional()
-    approved: boolean;
+        approved: boolean;
 }

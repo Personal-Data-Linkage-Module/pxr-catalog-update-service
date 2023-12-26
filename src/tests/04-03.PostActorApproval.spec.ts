@@ -6,7 +6,7 @@ https://opensource.org/licenses/mit-license.php
 import { Server } from 'net';
 /* eslint-enable */
 import * as supertest from 'supertest';
-import Application from '../index';
+import { Application } from '../resources/config/Application';
 import Common, { Url } from './Common';
 import * as express from 'express';
 import * as fs from 'fs';
@@ -14,7 +14,8 @@ import Config from '../common/Config';
 const Message = Config.ReadConfig('./config/message.json');
 
 // 対象アプリケーションを取得
-const expressApp = Application.express.app;
+const app = new Application();
+const expressApp = app.express.app;
 const common = new Common();
 
 // コンフィグファイルを読み込む
@@ -887,6 +888,7 @@ let _catalogServer: any;
 let _noticeServer: any;
 let _caServer: any;
 
+app.start();
 /**
  * CatalogUpdate API のユニットテスト
  */
@@ -895,20 +897,20 @@ describe('CatalogUpdate API', () => {
      * 全テスト実行前の処理
      */
     beforeAll(async () => {
-        await Application.start()
         // DB接続
         await common.connect();
         // DB初期化
         await common.executeSqlFile('initialData.sql');
-        // DB切断
-        await common.disconnect();
     });
     /**
      * 全テスト実行後の処理
      */
     afterAll(async () => {
         // サーバ停止
-        Application.stop();
+        app.stop();
+
+        // DB切断
+        await common.disconnect();
 
         // add_ns.jsonを元の状態に戻す
         fs.writeFileSync('./config/add_ns.json', beforeConfig);

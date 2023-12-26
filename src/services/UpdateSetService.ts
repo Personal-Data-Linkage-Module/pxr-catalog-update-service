@@ -79,7 +79,7 @@ export default class UpdateSetService {
             _ver: undefined
         };
         detail.destination = {
-            blockCode: blockCode,
+            blockCode,
             isSendAll: true,
             operatorType: OperatorType.TYPE_MANAGE_MEMBER
         };
@@ -103,7 +103,7 @@ export default class UpdateSetService {
         const detail: NotificationDomain = new NotificationDomain();
         detail.type = NotificationType.NOTICE;
         detail.destination = {
-            blockCode: blockCode,
+            blockCode,
             isSendAll: true,
             operatorType: OperatorType.TYPE_MANAGE_MEMBER
         };

@@ -9,15 +9,15 @@ import { transformToNumber } from '../../common/Transform';
 /* eslint-enable */
 
 export class CodeObject {
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsDefined()
     @IsNumber()
-    _value: number;
+        _value: number;
 
-    @Transform(transformToNumber)
+    @Transform(({ value }) => { return transformToNumber(value); })
     @IsDefined()
     @IsNumber()
-    _ver: number;
+        _ver: number;
 }
 
 /**
@@ -27,5 +27,5 @@ export default class RegionStatusStartReqDto {
     @Type(() => CodeObject)
     @ValidateNested()
     @IsDefined()
-    regionCode: CodeObject;
+        regionCode: CodeObject;
 }
