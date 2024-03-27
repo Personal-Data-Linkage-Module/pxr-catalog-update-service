@@ -10,6 +10,8 @@ import OperatorDomain from '../domains/OperatorDomain';
 import Config from './Config';
 import request = require('request');
 const Message = Config.ReadConfig('./config/message.json');
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
 
 /**
  * GETリクエストを実行する
