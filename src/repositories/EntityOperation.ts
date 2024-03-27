@@ -181,7 +181,7 @@ export default class EntityOperation {
                     }
                     prefix += ')';
                 } else {
-                    prefix += 'AND joinManage.joinRegionCode = 0';
+                    prefix += 'AND joinManage.joinRegionCode = 0 ';
                 }
             } else {
                 prefix += `AND joinManage.joinActorCode = ${actorCode} `;
@@ -199,7 +199,7 @@ export default class EntityOperation {
                     }
                     prefix += ')';
                 } else {
-                    prefix += 'AND joinManage.joinRegionCode = 0';
+                    prefix += 'AND joinManage.joinRegionCode = 0 ';
                 }
             } else {
                 prefix += `AND joinManage.joinActorCode = ${actorCode} `;
