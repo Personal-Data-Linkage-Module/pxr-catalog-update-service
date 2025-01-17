@@ -181,7 +181,7 @@ export default class EntityOperation {
                     }
                     prefix += ')';
                 } else {
-                    prefix += 'AND joinManage.joinRegionCode = 0';
+                    prefix += 'AND joinManage.joinRegionCode = 0 ';
                 }
             } else {
                 prefix += `AND joinManage.joinActorCode = ${actorCode} `;
@@ -199,7 +199,7 @@ export default class EntityOperation {
                     }
                     prefix += ')';
                 } else {
-                    prefix += 'AND joinManage.joinRegionCode = 0';
+                    prefix += 'AND joinManage.joinRegionCode = 0 ';
                 }
             } else {
                 prefix += `AND joinManage.joinActorCode = ${actorCode} `;
@@ -235,10 +235,66 @@ export default class EntityOperation {
         const entities = connection.getRepository(JoinServiceManage)
             .createQueryBuilder()
             .where('is_disabled = :isDisabled', { isDisabled: false })
-            .andWhere('join_manage_id = :id', { id })
+            .andWhere('join_manage_id = :id', { id: id })
             .orderBy('id')
             .getMany();
         return entities;
+    }
+
+    /**
+     * 提携申請の取得
+     * @param actorCode
+     * @param actorName
+     * @param inApproval
+     * @param isRequest
+     */
+    static async getAllianceApplications (
+        actorCode: number,
+        actorName: string,
+        inApproval: boolean,
+        isRequest: boolean
+    ) {
+        const connection = await connectDatabase();
+        try {
+            let statusPrefix = '';
+            if (!inApproval) {
+                statusPrefix += 'AND (allianceApprovalManage.status IS NULL OR allianceApprovalManage.status = 0)';
+            }
+            let prefix = '';
+            if (isRequest === true) {
+                prefix += ` AND allianceManage.applicantActorCode = ${actorCode} `;
+            } else if (isRequest === false) {
+                prefix += ` AND allianceManage.applicantActorCode != ${actorCode} `;
+                if (actorName === 'region-root') {
+                    prefix += ` AND allianceManage.allianceRegionCode = ${actorCode} `;
+                } else if (actorName === 'consumer') {
+                    prefix += ` AND allianceManage.allianceConsumerCode = ${actorCode} `;
+                } else {
+                    prefix += ` AND allianceManage.allianceTraderCode = ${actorCode} `;
+                }
+            } else {
+                if (actorName === 'region-root') {
+                    prefix += ` AND allianceManage.allianceRegionCode = ${actorCode} `;
+                } else if (actorName === 'consumer') {
+                    prefix += ` AND allianceManage.allianceConsumerCode = ${actorCode} `;
+                } else {
+                    prefix += ` AND allianceManage.allianceTraderCode = ${actorCode} `;
+                }
+            }
+            const entities = await connection.getRepository(AllianceManage)
+                .createQueryBuilder('allianceManage')
+                .leftJoinAndSelect(
+                    'allianceManage.allianceApprovalManage',
+                    'allianceApprovalManage',
+                    'allianceApprovalManage.isDisabled = false'
+                )
+                .andWhere('allianceManage.isDisabled = false ' + prefix + statusPrefix)
+                .orderBy('allianceManage.id')
+                .getMany();
+            return entities;
+        } finally {
+            // await connection.close();
+        }
     }
 
     /**
@@ -259,7 +315,7 @@ export default class EntityOperation {
                     'actorApprovalManage',
                     'actorApprovalManage.isDisabled = false'
                 )
-                .andWhere('actorManage.id = :id', { id })
+                .andWhere('actorManage.id = :id', { id: id })
                 .andWhere('actorManage.callerBlockCode = :code', { code: operator.blockCode })
                 .andWhere('actorManage.type = 1')
                 .andWhere('actorManage.isDraft = true')
@@ -291,9 +347,9 @@ export default class EntityOperation {
                         'actorApprovalManage',
                         'actorApprovalManage.isDisabled = false'
                     )
-                    .andWhere('actorManage.id = :id', { id })
+                    .andWhere('actorManage.id = :id', { id: id })
                     .andWhere('actorManage.callerActorCode = :code', { code: actorCode })
-                    .andWhere('actorManage.type = :type', { type })
+                    .andWhere('actorManage.type = :type', { type: type })
                     .andWhere('actorManage.isDisabled = false')
                     .andWhere('(actorManage.approvalExpireAt IS NULL OR actorManage.approvalExpireAt >= :expire)', { expire: new Date() })
                     .getOne();
@@ -307,10 +363,69 @@ export default class EntityOperation {
                         'actorApprovalManage.isDisabled = false'
                     )
                     .andWhere('actorManage.callerActorCode = :code', { code: actorCode })
-                    .andWhere('actorManage.type = :type', { type })
+                    .andWhere('actorManage.type = :type', { type: type })
                     .andWhere('actorManage.isDisabled = false')
                     .andWhere('(actorManage.approvalExpireAt IS NULL OR actorManage.approvalExpireAt >= :expire)', { expire: new Date() })
                     .orderBy('actorApprovalManage.status', 'ASC')
+                    .getOne();
+                return entity;
+            }
+        } finally {
+            // await connection.close();
+        }
+    }
+
+    /**
+     * 既に存在する提携申請を検索する
+     * @param id
+     * @param callerCode
+     * @param traderCode
+     * @param targetCode
+     * @param column
+     */
+    static async searchExistsAlliance (
+        id: number | undefined,
+        callerCode: number,
+        traderCode: number,
+        targetCode: number,
+        column: 'Consumer' | 'Region',
+        applicantCode: number
+    ) {
+        const connection = await connectDatabase();
+        try {
+            if (id) {
+                const entity = await connection.getRepository(AllianceManage)
+                    .createQueryBuilder('allianceManage')
+                    .leftJoinAndSelect(
+                        'allianceManage.allianceApprovalManage',
+                        'allianceApprovalManage',
+                        'allianceApprovalManage.isDisabled = false'
+                    )
+                    .andWhere('allianceManage.id = :id', { id: id })
+                    .andWhere('allianceManage.applicantActorCode = :c', { c: applicantCode })
+                    .andWhere('allianceManage.isDraft = true')
+                    .andWhere('allianceManage.isDisabled = false')
+                    .andWhere('(allianceManage.approvalExpireAt IS NULL OR allianceManage.approvalExpireAt >= :expire)', { expire: new Date() })
+                    .orderBy('allianceManage.updatedAt', 'DESC')
+                    .addOrderBy('allianceApprovalManage.updatedAt', 'DESC')
+                    .getOne();
+                return entity;
+            } else {
+                const entity = await connection.getRepository(AllianceManage)
+                    .createQueryBuilder('allianceManage')
+                    .leftJoinAndSelect(
+                        'allianceManage.allianceApprovalManage',
+                        'allianceApprovalManage',
+                        'allianceApprovalManage.isDisabled = false'
+                    )
+                    .andWhere('allianceManage.allianceTraderCode = :traderCode', { traderCode: traderCode })
+                    .andWhere(`allianceManage.alliance${column}Code = :targetCode`, { targetCode: targetCode })
+                    .andWhere('allianceManage.applicantActorCode = :callerCode', { callerCode: callerCode })
+                    .andWhere('allianceManage.isDisabled = false')
+                    .andWhere('(allianceManage.approvalExpireAt IS NULL OR allianceManage.approvalExpireAt >= :expire)', { expire: new Date() })
+                    .orderBy('allianceManage.id', 'DESC')
+                    .addOrderBy('allianceManage.updatedAt', 'DESC')
+                    .addOrderBy('allianceApprovalManage.updatedAt', 'DESC')
                     .getOne();
                 return entity;
             }
@@ -346,7 +461,7 @@ export default class EntityOperation {
                         'joinApprovalManage',
                         'joinApprovalManage.isDisabled = false'
                     )
-                    .andWhere('joinManage.id = :id', { id })
+                    .andWhere('joinManage.id = :id', { id: id })
                     .andWhere('joinManage.applicantActorCode = :c', { c: operator.actorCode })
                     .andWhere('joinManage.applicantActorVersion = :d', { d: operator.actorVersion })
                     .andWhere('joinManage.isDraft = true')
@@ -697,15 +812,15 @@ export default class EntityOperation {
         const connection = await connectDatabase();
         let sql = connection.getRepository(DataOperationManage)
             .createQueryBuilder()
-            .where('id = :id', { id })
+            .where('id = :id', { id: id })
             .andWhere('is_disabled = :isDisabled', { isDisabled: false });
         if (actorCode) {
             // (actorCodeが無い場合手前の処理でエラーになるため呼ばれることはなく、else分岐は通らない)
-            sql = sql.andWhere('application_actor_code = :actorCode', { actorCode });
+            sql = sql.andWhere('application_actor_code = :actorCode', { actorCode: actorCode });
         }
         if (isDraft) {
             // (isDraft = falseで呼ばれることがないためelse分岐は通らない)
-            sql = sql.andWhere('is_draft = :isDraft', { isDraft });
+            sql = sql.andWhere('is_draft = :isDraft', { isDraft: isDraft });
         }
         const entity = await sql.getOne();
         return entity;
@@ -724,7 +839,7 @@ export default class EntityOperation {
             .createQueryBuilder()
             .where('is_disabled = :isDisabled', { isDisabled: false });
         if (approvalRequest) {
-            sql = sql.andWhere('application_actor_code = :actorCode', { actorCode });
+            sql = sql.andWhere('application_actor_code = :actorCode', { actorCode: actorCode });
         }
         if (!approved) {
             sql = sql.andWhere('is_draft = :isDraft', { isDraft: true });
@@ -858,9 +973,9 @@ export default class EntityOperation {
         const connection = await connectDatabase();
         const entity = await connection.getRepository(RegionManage)
             .createQueryBuilder()
-            .andWhere('applicant_actor_code = :actorCode', { actorCode })
-            .andWhere('id = :id', { id })
-            .andWhere('type = :type', { type })
+            .andWhere('applicant_actor_code = :actorCode', { actorCode: actorCode })
+            .andWhere('id = :id', { id: id })
+            .andWhere('type = :type', { type: type })
             .andWhere('is_disabled = false')
             .getOne();
         return entity;
@@ -880,11 +995,11 @@ export default class EntityOperation {
                 'regionApprovalManage',
                 'regionApprovalManage.isDisabled = false'
             )
-            .andWhere('regionManage.applicantActorCode = :actorCode', { actorCode })
-            .andWhere('regionManage.type = :type', { type })
-            .andWhere('regionApprovalManage.status = :status', { status })
+            .andWhere('regionManage.applicantActorCode = :actorCode', { actorCode: actorCode })
+            .andWhere('regionManage.type = :type', { type: type })
+            .andWhere('regionApprovalManage.status = :status', { status: status })
             .andWhere('regionManage.isDisabled = :isDisabled', { isDisabled: false })
-            .andWhere('regionManage.regionCode = :regionCode', { regionCode })
+            .andWhere('regionManage.regionCode = :regionCode', { regionCode: regionCode })
             .orderBy('regionManage.id')
             .getMany();
         return entities;
@@ -938,8 +1053,8 @@ export default class EntityOperation {
                 'regionStatusApprovalManage',
                 'regionStatusApprovalManage.isDisabled = false'
             )
-            .where('regionStatusManage.regionCode = :regionCode', { regionCode })
-            .andWhere('regionStatusManage.type = :type', { type })
+            .where('regionStatusManage.regionCode = :regionCode', { regionCode: regionCode })
+            .andWhere('regionStatusManage.type = :type', { type: type })
             .andWhere('regionStatusManage.isDisabled = :isDisabled', { isDisabled: false })
             .andWhere('regionStatusApprovalManage.status = :status', { status: RegionStatusApprovalManage.APPLYING_STATUS })
             .getMany();
