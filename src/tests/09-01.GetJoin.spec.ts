@@ -3,7 +3,7 @@ Released under the MIT license.
 https://opensource.org/licenses/mit-license.php
 */
 import * as supertest from 'supertest';
-import Application from '../index';
+import { Application } from '../resources/config/Application';
 import Common, { Url } from './Common';
 import { Session } from './09-00.GetJoin.TestData';
 // eslint-disable-next-line no-unused-vars
@@ -14,1159 +14,1160 @@ import Config from '../common/Config';
 const Message = Config.ReadConfig('./config/message.json');
 
 // 対象アプリケーションを取得
-const expressApp = Application.express.app;
+const app = new Application();
+const expressApp = app.express.app;
 const common = new Common();
 
 /**
  * カタログサービス（申請取得用）
  */
 export class CatalogServer4Get {
-    _app: express.Express;
-    _server: Server;
+  _app: express.Express;
+  _server: Server;
 
-    constructor (status: number) {
-        this._app = express();
+  constructor (status: number) {
+      this._app = express();
 
-        // イベントハンドラー
-        const _listener = (req: express.Request, res: express.Response) => {
-            const code = Number(req.params.code);
-            if (status === 200) {
-                res.status(200);
-                // アクター確認
-                if (code === 1000001) {
-                    res.json({
-                        "catalogItem": {
-                          "ns": "catalog/ext/test-org/actor/pxr-root",
-                          "name": "流通制御組織",
-                          "_code": {
-                            "_value": 1000001,
-                            "_ver": 1
-                          },
-                          "inherit": {
-                            "_value": 50,
-                            "_ver": 1
-                          },
-                          "description": "流通制御組織の定義です。"
+      // イベントハンドラー
+      const _listener = (req: express.Request, res: express.Response) => {
+          const code = Number(req.params.code);
+          if (status === 200) {
+              res.status(200);
+              // アクター確認
+              if (code === 1000001) {
+                  res.json({
+                      "catalogItem": {
+                        "ns": "catalog/ext/test-org/actor/pxr-root",
+                        "name": "流通制御組織",
+                        "_code": {
+                          "_value": 1000001,
+                          "_ver": 1
                         },
-                        "template": {
-                          "_code": {
-                            "_value": 1000001,
-                            "_ver": 1
-                          },
-                          "app-cert": {
-                            "cert": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "アプリケーションプロバイダーの認定基準",
-                                    "content": [
-                                      {
-                                        "sentence": "アプリケーションプロバイダーの認定基準です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ],
-                            "audit": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "アプリケーションプロバイダーの監査手順",
-                                    "content": [
-                                      {
-                                        "sentence": "アプリケーションプロバイダーの監査手順です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "category": null,
-                          "consumer-cert": {
-                            "cert": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "データコンシューマーの認定基準",
-                                    "content": [
-                                      {
-                                        "sentence": "データコンシューマーの認定基準です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ],
-                            "audit": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "データコンシューマーの監査手順",
-                                    "content": [
-                                      {
-                                        "sentence": "データコンシューマーの監査手順です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "data-trader-cert": {
-                            "cert": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "データ取引サービスプロバイダーの認定基準",
-                                    "content": [
-                                      {
-                                        "sentence": "データ取引サービスプロバイダーの認定基準です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ],
-                            "audit": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "データ取引サービスプロバイダーの監査手順",
-                                    "content": [
-                                      {
-                                        "sentence": "データ取引サービスプロバイダーの監査手順です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "main-block": {
-                            "_value": 1000110,
-                            "_ver": 1
-                          },
-                          "other-block": null,
-                          "region-root-cert": {
-                            "cert": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "領域運営サービスプロバイダーの認定基準",
-                                    "content": [
-                                      {
-                                        "sentence": "領域運営サービスプロバイダーの認定基準です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ],
-                            "audit": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "領域運営サービスプロバイダーの監査手順",
-                                    "content": [
-                                      {
-                                        "sentence": "領域運営サービスプロバイダーの監査手順です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "statement": [
+                        "inherit": {
+                          "_value": 50,
+                          "_ver": 1
+                        },
+                        "description": "流通制御組織の定義です。"
+                      },
+                      "template": {
+                        "_code": {
+                          "_value": 1000001,
+                          "_ver": 1
+                        },
+                        "app-cert": {
+                          "cert": [
                             {
-                              "title": "組織ステートメント",
+                              "title": "",
                               "section": [
                                 {
-                                  "title": "ご挨拶",
+                                  "title": "アプリケーションプロバイダーの認定基準",
                                   "content": [
                                     {
-                                      "sentence": "データ取引組織のステートメントです。"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "title": "事業概要",
-                                  "content": [
-                                    {
-                                      "sentence": "データ取引組織の事業概要です。"
+                                      "sentence": "アプリケーションプロバイダーの認定基準です。"
                                     }
                                   ]
                                 }
                               ]
                             }
                           ],
-                          "status": [
+                          "audit": [
                             {
-                              "status": "certified",
-                              "by": null,
-                              "at": "20200101T000000.000+0900"
-                            }
-                          ],
-                          "wf-cert": {
-                            "cert": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "ワークフロープロバイダーの認定基準",
-                                    "content": [
-                                      {
-                                        "sentence": "ワークフロープロバイダーの認定基準です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ],
-                            "audit": [
-                              {
-                                "title": "",
-                                "section": [
-                                  {
-                                    "title": "ワークフロープロバイダーの監査手順",
-                                    "content": [
-                                      {
-                                        "sentence": "ワークフロープロバイダーの監査手順です。"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        },
-                        "prop": [
-                          {
-                            "key": "app-cert",
-                            "type": {
-                              "of": "inner",
-                              "inner": "Certification",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "アプリケーションプロバイダー認定"
-                          },
-                          {
-                            "key": "category",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": [
-                                  "catalog/model/category/share/actor",
-                                  "catalog/built_in/category/share/actor",
-                                  "catalog/ext/test-org/category/share/actor",
-                                  "catalog/model/category/supply/actor",
-                                  "catalog/built_in/category/supply/actor",
-                                  "catalog/ext/test-org/category/supply/actor"
-                                ],
-                                "_code": null,
-                                "base": null
-                              }
-                            },
-                            "description": null
-                          },
-                          {
-                            "key": "consumer-cert",
-                            "type": {
-                              "of": "inner",
-                              "inner": "Certification",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "データコンシューマー認定"
-                          },
-                          {
-                            "key": "data-trader-cert",
-                            "type": {
-                              "of": "inner",
-                              "inner": "Certification",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "データ取引サービスプロバイダー認定"
-                          },
-                          {
-                            "key": "main-block",
-                            "type": {
-                              "of": "code",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "アクター参加時に割り当てられたPXR-Block"
-                          },
-                          {
-                            "key": "other-block",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "他アクターから引き継いだPXR-Blockの配列"
-                          },
-                          {
-                            "key": "region-root-cert",
-                            "type": {
-                              "of": "inner",
-                              "inner": "Certification",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "領域運営サービスプロバイダー認定"
-                          },
-                          {
-                            "key": "statement",
-                            "type": {
-                              "of": "item[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": [
-                                  {
-                                    "_value": 61,
-                                    "_ver": 1
-                                  }
-                                ],
-                                "base": null
-                              }
-                            },
-                            "description": "組織ステートメント"
-                          },
-                          {
-                            "key": "status",
-                            "type": {
-                              "of": "inner[]",
-                              "inner": "CertStatus",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "認定の履歴"
-                          },
-                          {
-                            "key": "wf-cert",
-                            "type": {
-                              "of": "inner",
-                              "inner": "Certification",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "ワークフロープロバイダー認定"
-                          }
-                        ],
-                        "attribute": null
-                      });
-                } else if (code === 1000020) {
-                    res.json({
-                        "catalogItem": {
-                          "ns": "catalog/ext/test-org/actor/data-trader",
-                          "name": "データ取引組織",
-                          "_code": {
-                            "_value": 1000020,
-                            "_ver": 1
-                          },
-                          "inherit": {
-                            "_value": 38,
-                            "_ver": 1
-                          },
-                          "description": "データ取引組織の定義です。"
-                        },
-                        "template": {
-                          "_code": {
-                            "_value": 1000020,
-                            "_ver": 1
-                          },
-                          "category": null,
-                          "consumer-alliance": [
-                            {
-                              "_value": 1000114,
-                              "_ver": 1
-                            }
-                          ],
-                          "main-block": {
-                            "_value": 1000109,
-                            "_ver": 1
-                          },
-                          "other-block": null,
-                          "region-root-alliance": [
-                            {
-                              "_value": 1000002,
-                              "_ver": 1
-                            }
-                          ],
-                          "statement": [
-                            {
-                              "title": "組織ステートメント",
+                              "title": "",
                               "section": [
                                 {
-                                  "title": "ご挨拶",
+                                  "title": "アプリケーションプロバイダーの監査手順",
                                   "content": [
                                     {
-                                      "sentence": "データ取引組織のステートメントです。"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "title": "事業概要",
-                                  "content": [
-                                    {
-                                      "sentence": "データ取引組織の事業概要です。"
+                                      "sentence": "アプリケーションプロバイダーの監査手順です。"
                                     }
                                   ]
                                 }
                               ]
-                            }
-                          ],
-                          "status": [
-                            {
-                              "status": "certified",
-                              "by": {
-                                "_value": 1000001,
-                                "_ver": 1
-                              },
-                              "at": "20200101T000000.000+0900"
                             }
                           ]
                         },
-                        "prop": [
-                          {
-                            "key": "category",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": [
-                                  "catalog/model/category/share/actor",
-                                  "catalog/built_in/category/share/actor",
-                                  "catalog/ext/test-org/category/share/actor",
-                                  "catalog/model/category/supply/actor",
-                                  "catalog/built_in/category/supply/actor",
-                                  "catalog/ext/test-org/category/supply/actor"
-                                ],
-                                "_code": null,
-                                "base": null
-                              }
-                            },
-                            "description": null
-                          },
-                          {
-                            "key": "consumer-alliance",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 37,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "提携しているデータコンシューマーコード配列"
-                          },
-                          {
-                            "key": "main-block",
-                            "type": {
-                              "of": "code",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "アクター参加時に割り当てられたPXR-Block"
-                          },
-                          {
-                            "key": "other-block",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "他アクターから引き継いだPXR-Blockの配列"
-                          },
-                          {
-                            "key": "region-root-alliance",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 49,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "提携している領域運営サービスプロバイダーコード配列"
-                          },
-                          {
-                            "key": "statement",
-                            "type": {
-                              "of": "item[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": [
-                                  {
-                                    "_value": 61,
-                                    "_ver": 1
-                                  }
-                                ],
-                                "base": null
-                              }
-                            },
-                            "description": "組織ステートメント"
-                          },
-                          {
-                            "key": "status",
-                            "type": {
-                              "of": "inner[]",
-                              "inner": "CertStatus",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "認定の履歴"
-                          }
-                        ],
-                        "attribute": null
-                      });
-                } else if (code === 1000114) {
-                    res.json({
-                        "catalogItem": {
-                          "ns": "catalog/ext/test-org/actor/consumer",
-                          "name": "営利企業",
-                          "_code": {
-                            "_value": 1000114,
-                            "_ver": 1
-                          },
-                          "inherit": {
-                            "_value": 37,
-                            "_ver": 1
-                          },
-                          "description": "営利企業の定義です。"
-                        },
-                        "template": {
-                          "_code": {
-                            "_value": 1000114,
-                            "_ver": 1
-                          },
-                          "category": null,
-                          "main-block": {
-                            "_value": 1000108,
-                            "_ver": 1
-                          },
-                          "other-block": null,
-                          "statement": [
+                        "category": null,
+                        "consumer-cert": {
+                          "cert": [
                             {
-                              "title": "組織ステートメント",
+                              "title": "",
                               "section": [
                                 {
-                                  "title": "ご挨拶",
+                                  "title": "データコンシューマーの認定基準",
                                   "content": [
                                     {
-                                      "sentence": "営利企業の組織ステートメントです。"
+                                      "sentence": "データコンシューマーの認定基準です。"
                                     }
                                   ]
                                 }
                               ]
                             }
                           ],
-                          "status": [
+                          "audit": [
                             {
-                              "status": "certified",
-                              "by": {
-                                "_value": 1000001,
-                                "_ver": 1
-                              },
-                              "at": "20200101T000000.000+0900"
-                            }
-                          ],
-                          "trader-alliance": [
-                            {
-                              "_value": 1000020,
-                              "_ver": 1
+                              "title": "",
+                              "section": [
+                                {
+                                  "title": "データコンシューマーの監査手順",
+                                  "content": [
+                                    {
+                                      "sentence": "データコンシューマーの監査手順です。"
+                                    }
+                                  ]
+                                }
+                              ]
                             }
                           ]
                         },
-                        "prop": [
-                          {
-                            "key": "category",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": [
-                                  "catalog/model/category/share/actor",
-                                  "catalog/built_in/category/share/actor",
-                                  "catalog/ext/test-org/category/share/actor",
-                                  "catalog/model/category/supply/actor",
-                                  "catalog/built_in/category/supply/actor",
-                                  "catalog/ext/test-org/category/supply/actor"
-                                ],
-                                "_code": null,
-                                "base": null
-                              }
-                            },
-                            "description": null
-                          },
-                          {
-                            "key": "main-block",
-                            "type": {
-                              "of": "code",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
+                        "data-trader-cert": {
+                          "cert": [
+                            {
+                              "title": "",
+                              "section": [
+                                {
+                                  "title": "データ取引サービスプロバイダーの認定基準",
+                                  "content": [
+                                    {
+                                      "sentence": "データ取引サービスプロバイダーの認定基準です。"
+                                    }
+                                  ]
                                 }
-                              }
-                            },
-                            "description": "アクター参加時に割り当てられたPXR-Block"
-                          },
-                          {
-                            "key": "other-block",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
+                              ]
+                            }
+                          ],
+                          "audit": [
+                            {
+                              "title": "",
+                              "section": [
+                                {
+                                  "title": "データ取引サービスプロバイダーの監査手順",
+                                  "content": [
+                                    {
+                                      "sentence": "データ取引サービスプロバイダーの監査手順です。"
+                                    }
+                                  ]
                                 }
-                              }
-                            },
-                            "description": "他アクターから引き継いだPXR-Blockの配列"
-                          },
+                              ]
+                            }
+                          ]
+                        },
+                        "main-block": {
+                          "_value": 1000110,
+                          "_ver": 1
+                        },
+                        "other-block": null,
+                        "region-root-cert": {
+                          "cert": [
+                            {
+                              "title": "",
+                              "section": [
+                                {
+                                  "title": "領域運営サービスプロバイダーの認定基準",
+                                  "content": [
+                                    {
+                                      "sentence": "領域運営サービスプロバイダーの認定基準です。"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "audit": [
+                            {
+                              "title": "",
+                              "section": [
+                                {
+                                  "title": "領域運営サービスプロバイダーの監査手順",
+                                  "content": [
+                                    {
+                                      "sentence": "領域運営サービスプロバイダーの監査手順です。"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "statement": [
                           {
-                            "key": "statement",
-                            "type": {
-                              "of": "item[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": [
+                            "title": "組織ステートメント",
+                            "section": [
+                              {
+                                "title": "ご挨拶",
+                                "content": [
                                   {
-                                    "_value": 61,
-                                    "_ver": 1
+                                    "sentence": "データ取引組織のステートメントです。"
                                   }
-                                ],
-                                "base": null
+                                ]
+                              },
+                              {
+                                "title": "事業概要",
+                                "content": [
+                                  {
+                                    "sentence": "データ取引組織の事業概要です。"
+                                  }
+                                ]
                               }
-                            },
-                            "description": "組織ステートメント"
-                          },
-                          {
-                            "key": "status",
-                            "type": {
-                              "of": "inner[]",
-                              "inner": "CertStatus",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "認定の履歴"
-                          },
-                          {
-                            "key": "trader-alliance",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 38,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "提携するデータ取引サービスプロバイダーのコード配列"
+                            ]
                           }
                         ],
-                        "attribute": null
-                      });
-                } else if (code === 1000118) {
-                    res.json({
-                        catalogItem: {
-                            ns: 'catalog/ext/test-org/actor/app',
-                            _code: {
+                        "status": [
+                          {
+                            "status": "certified",
+                            "by": null,
+                            "at": "20200101T000000.000+0900"
+                          }
+                        ],
+                        "wf-cert": {
+                          "cert": [
+                            {
+                              "title": "",
+                              "section": [
+                                {
+                                  "title": "ワークフロープロバイダーの認定基準",
+                                  "content": [
+                                    {
+                                      "sentence": "ワークフロープロバイダーの認定基準です。"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "audit": [
+                            {
+                              "title": "",
+                              "section": [
+                                {
+                                  "title": "ワークフロープロバイダーの監査手順",
+                                  "content": [
+                                    {
+                                      "sentence": "ワークフロープロバイダーの監査手順です。"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "prop": [
+                        {
+                          "key": "app-cert",
+                          "type": {
+                            "of": "inner",
+                            "inner": "Certification",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "アプリケーションプロバイダー認定"
+                        },
+                        {
+                          "key": "category",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": [
+                                "catalog/model/category/share/actor",
+                                "catalog/built_in/category/share/actor",
+                                "catalog/ext/test-org/category/share/actor",
+                                "catalog/model/category/supply/actor",
+                                "catalog/built_in/category/supply/actor",
+                                "catalog/ext/test-org/category/supply/actor"
+                              ],
+                              "_code": null,
+                              "base": null
+                            }
+                          },
+                          "description": null
+                        },
+                        {
+                          "key": "consumer-cert",
+                          "type": {
+                            "of": "inner",
+                            "inner": "Certification",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "データコンシューマー認定"
+                        },
+                        {
+                          "key": "data-trader-cert",
+                          "type": {
+                            "of": "inner",
+                            "inner": "Certification",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "データ取引サービスプロバイダー認定"
+                        },
+                        {
+                          "key": "main-block",
+                          "type": {
+                            "of": "code",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "アクター参加時に割り当てられたPXR-Block"
+                        },
+                        {
+                          "key": "other-block",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "他アクターから引き継いだPXR-Blockの配列"
+                        },
+                        {
+                          "key": "region-root-cert",
+                          "type": {
+                            "of": "inner",
+                            "inner": "Certification",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "領域運営サービスプロバイダー認定"
+                        },
+                        {
+                          "key": "statement",
+                          "type": {
+                            "of": "item[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": [
+                                {
+                                  "_value": 61,
+                                  "_ver": 1
+                                }
+                              ],
+                              "base": null
+                            }
+                          },
+                          "description": "組織ステートメント"
+                        },
+                        {
+                          "key": "status",
+                          "type": {
+                            "of": "inner[]",
+                            "inner": "CertStatus",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "認定の履歴"
+                        },
+                        {
+                          "key": "wf-cert",
+                          "type": {
+                            "of": "inner",
+                            "inner": "Certification",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "ワークフロープロバイダー認定"
+                        }
+                      ],
+                      "attribute": null
+                    });
+              } else if (code === 1000020) {
+                  res.json({
+                      "catalogItem": {
+                        "ns": "catalog/ext/test-org/actor/data-trader",
+                        "name": "データ取引組織",
+                        "_code": {
+                          "_value": 1000020,
+                          "_ver": 1
+                        },
+                        "inherit": {
+                          "_value": 38,
+                          "_ver": 1
+                        },
+                        "description": "データ取引組織の定義です。"
+                      },
+                      "template": {
+                        "_code": {
+                          "_value": 1000020,
+                          "_ver": 1
+                        },
+                        "category": null,
+                        "consumer-alliance": [
+                          {
+                            "_value": 1000114,
+                            "_ver": 1
+                          }
+                        ],
+                        "main-block": {
+                          "_value": 1000109,
+                          "_ver": 1
+                        },
+                        "other-block": null,
+                        "region-root-alliance": [
+                          {
+                            "_value": 1000002,
+                            "_ver": 1
+                          }
+                        ],
+                        "statement": [
+                          {
+                            "title": "組織ステートメント",
+                            "section": [
+                              {
+                                "title": "ご挨拶",
+                                "content": [
+                                  {
+                                    "sentence": "データ取引組織のステートメントです。"
+                                  }
+                                ]
+                              },
+                              {
+                                "title": "事業概要",
+                                "content": [
+                                  {
+                                    "sentence": "データ取引組織の事業概要です。"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "status": [
+                          {
+                            "status": "certified",
+                            "by": {
+                              "_value": 1000001,
+                              "_ver": 1
+                            },
+                            "at": "20200101T000000.000+0900"
+                          }
+                        ]
+                      },
+                      "prop": [
+                        {
+                          "key": "category",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": [
+                                "catalog/model/category/share/actor",
+                                "catalog/built_in/category/share/actor",
+                                "catalog/ext/test-org/category/share/actor",
+                                "catalog/model/category/supply/actor",
+                                "catalog/built_in/category/supply/actor",
+                                "catalog/ext/test-org/category/supply/actor"
+                              ],
+                              "_code": null,
+                              "base": null
+                            }
+                          },
+                          "description": null
+                        },
+                        {
+                          "key": "consumer-alliance",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 37,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "提携しているデータコンシューマーコード配列"
+                        },
+                        {
+                          "key": "main-block",
+                          "type": {
+                            "of": "code",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "アクター参加時に割り当てられたPXR-Block"
+                        },
+                        {
+                          "key": "other-block",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "他アクターから引き継いだPXR-Blockの配列"
+                        },
+                        {
+                          "key": "region-root-alliance",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 49,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "提携している領域運営サービスプロバイダーコード配列"
+                        },
+                        {
+                          "key": "statement",
+                          "type": {
+                            "of": "item[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": [
+                                {
+                                  "_value": 61,
+                                  "_ver": 1
+                                }
+                              ],
+                              "base": null
+                            }
+                          },
+                          "description": "組織ステートメント"
+                        },
+                        {
+                          "key": "status",
+                          "type": {
+                            "of": "inner[]",
+                            "inner": "CertStatus",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "認定の履歴"
+                        }
+                      ],
+                      "attribute": null
+                    });
+              } else if (code === 1000114) {
+                  res.json({
+                      "catalogItem": {
+                        "ns": "catalog/ext/test-org/actor/consumer",
+                        "name": "営利企業",
+                        "_code": {
+                          "_value": 1000114,
+                          "_ver": 1
+                        },
+                        "inherit": {
+                          "_value": 37,
+                          "_ver": 1
+                        },
+                        "description": "営利企業の定義です。"
+                      },
+                      "template": {
+                        "_code": {
+                          "_value": 1000114,
+                          "_ver": 1
+                        },
+                        "category": null,
+                        "main-block": {
+                          "_value": 1000108,
+                          "_ver": 1
+                        },
+                        "other-block": null,
+                        "statement": [
+                          {
+                            "title": "組織ステートメント",
+                            "section": [
+                              {
+                                "title": "ご挨拶",
+                                "content": [
+                                  {
+                                    "sentence": "営利企業の組織ステートメントです。"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "status": [
+                          {
+                            "status": "certified",
+                            "by": {
+                              "_value": 1000001,
+                              "_ver": 1
+                            },
+                            "at": "20200101T000000.000+0900"
+                          }
+                        ],
+                        "trader-alliance": [
+                          {
+                            "_value": 1000020,
+                            "_ver": 1
+                          }
+                        ]
+                      },
+                      "prop": [
+                        {
+                          "key": "category",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": [
+                                "catalog/model/category/share/actor",
+                                "catalog/built_in/category/share/actor",
+                                "catalog/ext/test-org/category/share/actor",
+                                "catalog/model/category/supply/actor",
+                                "catalog/built_in/category/supply/actor",
+                                "catalog/ext/test-org/category/supply/actor"
+                              ],
+                              "_code": null,
+                              "base": null
+                            }
+                          },
+                          "description": null
+                        },
+                        {
+                          "key": "main-block",
+                          "type": {
+                            "of": "code",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "アクター参加時に割り当てられたPXR-Block"
+                        },
+                        {
+                          "key": "other-block",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "他アクターから引き継いだPXR-Blockの配列"
+                        },
+                        {
+                          "key": "statement",
+                          "type": {
+                            "of": "item[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": [
+                                {
+                                  "_value": 61,
+                                  "_ver": 1
+                                }
+                              ],
+                              "base": null
+                            }
+                          },
+                          "description": "組織ステートメント"
+                        },
+                        {
+                          "key": "status",
+                          "type": {
+                            "of": "inner[]",
+                            "inner": "CertStatus",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "認定の履歴"
+                        },
+                        {
+                          "key": "trader-alliance",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 38,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "提携するデータ取引サービスプロバイダーのコード配列"
+                        }
+                      ],
+                      "attribute": null
+                    });
+              } else if (code === 1000118) {
+                  res.json({
+                      catalogItem: {
+                          ns: 'catalog/ext/test-org/actor/app',
+                          _code: {
+                            _value: 1000118,
+                            _ver: 1
+                        }
+                      },
+                      template: {
+                          _code: {
                               _value: 1000118,
                               _ver: 1
-                          }
-                        },
-                        template: {
-                            _code: {
-                                _value: 1000118,
-                                _ver: 1
-                            },
-                            'main-block': {
-                                _value: 1000106,
-                                _ver: 1
-                            }
-                        }
-                    });
-                } else if (code === 1000117) {
-                    res.json({
-                        "catalogItem": {
-                          "ns": "catalog/ext/test-org/actor/app",
-                          "name": "テスト用アプリケーション",
-                          "_code": {
-                            "_value": 1000117,
-                            "_ver": 1
                           },
-                          "inherit": {
-                            "_value": 47,
-                            "_ver": 1
-                          },
-                          "description": "テスト用アプリケーションです"
-                        },
-                        "template": {
-                          "_code": {
-                            "_value": 1000117,
-                            "_ver": 1
-                          },
-                          "category": null,
-                          "main-block": {
-                            "_value": 1000115,
-                            "_ver": 1
-                          },
-                          "other-block": null,
-                          "region-alliance": [
-                            {
-                              "_value": 1000116,
-                              "_ver": 1
-                            }
-                          ],
-                          "statement": [
-                            {
-                              "title": "組織ステートメント",
-                              "section": [
-                                {
-                                  "title": "ご挨拶",
-                                  "content": [
-                                    {
-                                      "sentence": "テスト用アプリケーションのステートメントです。"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ],
-                          "status": [
-                            {
-                              "status": "certified",
-                              "by": {
-                                "_value": 1000001,
-                                "_ver": 1
-                              },
-                              "at": "20200101T000000.000+0900"
-                            }
-                          ],
-                          "workflow": [
-                            {
-                              "_value": 1000200,
-                              "_ver": 1
-                            }
-                          ]
-                        },
-                        "prop": [
-                          {
-                            "key": "category",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": [
-                                  "catalog/model/category/share/actor",
-                                  "catalog/built_in/category/share/actor",
-                                  "catalog/ext/test-org/category/share/actor",
-                                  "catalog/model/category/supply/actor",
-                                  "catalog/built_in/category/supply/actor",
-                                  "catalog/ext/test-org/category/supply/actor"
-                                ],
-                                "_code": null,
-                                "base": null
-                              }
-                            },
-                            "description": null
-                          },
-                          {
-                            "key": "main-block",
-                            "type": {
-                              "of": "code",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "アクター参加時に割り当てられたPXR-Block"
-                          },
-                          {
-                            "key": "other-block",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "他アクターから引き継いだPXR-Blockの配列"
-                          },
-                          {
-                            "key": "region-alliance",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 48,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "参加している領域運営サービスプロバイダーコード配列"
-                          },
-                          {
-                            "key": "statement",
-                            "type": {
-                              "of": "item[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": [
-                                  {
-                                    "_value": 61,
-                                    "_ver": 1
-                                  }
-                                ],
-                                "base": null
-                              }
-                            },
-                            "description": "組織ステートメント"
-                          },
-                          {
-                            "key": "status",
-                            "type": {
-                              "of": "inner[]",
-                              "inner": "CertStatus",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "認定の履歴"
-                          },
-                          {
-                            "key": "workflow",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 46,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "ワークフロー定義の配列"
-                          }
-                        ],
-                        "attribute": null
-                      });
-                } else if (code === 1000002) {
-                    res.json({
-                        "catalogItem": {
-                          "ns": "catalog/ext/test-org/actor/region-root",
-                          "name": "organization",
-                          "_code": {
-                            "_value": 1000002,
-                            "_ver": 1
-                          },
-                          "inherit": {
-                            "_value": 49,
-                            "_ver": 1
-                          },
-                          "description": "organizationの定義です。"
-                        },
-                        "template": {
-                          "_code": {
-                            "_value": 1000002,
-                            "_ver": 1
-                          },
-                          "category": null,
-                          "main-block": {
-                            "_value": 1000111,
-                            "_ver": 1
-                          },
-                          "other-block": null,
-                          "region": [
-                            {
-                              "_value": 1000003,
-                              "_ver": 1
-                            },
-                            {
-                              "_value": 1000007,
-                              "_ver": 1
-                            }
-                          ],
-                          "statement": [
-                            {
-                              "title": "組織ステートメント",
-                              "section": [
-                                {
-                                  "title": "ご挨拶",
-                                  "content": [
-                                    {
-                                      "sentence": "organizationの組織ステートメントです。"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ],
-                          "status": [
-                            {
-                              "status": "certified",
-                              "by": {
-                                "_value": 1000001,
-                                "_ver": 1
-                              },
-                              "at": "20200101T000000.000+0900"
-                            }
-                          ],
-                          "trader-alliance": [
-                            {
-                              "_value": 1000020,
-                              "_ver": 1
-                            }
-                          ]
-                        },
-                        "prop": [
-                          {
-                            "key": "category",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": [
-                                  "catalog/model/category/share/actor",
-                                  "catalog/built_in/category/share/actor",
-                                  "catalog/ext/test-org/category/share/actor",
-                                  "catalog/model/category/supply/actor",
-                                  "catalog/built_in/category/supply/actor",
-                                  "catalog/ext/test-org/category/supply/actor"
-                                ],
-                                "_code": null,
-                                "base": null
-                              }
-                            },
-                            "description": null
-                          },
-                          {
-                            "key": "main-block",
-                            "type": {
-                              "of": "code",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "アクター参加時に割り当てられたPXR-Block"
-                          },
-                          {
-                            "key": "other-block",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 29,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "他アクターから引き継いだPXR-Blockの配列"
-                          },
-                          {
-                            "key": "region",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 48,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "Region定義"
-                          },
-                          {
-                            "key": "statement",
-                            "type": {
-                              "of": "item[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": [
-                                  {
-                                    "_value": 61,
-                                    "_ver": 1
-                                  }
-                                ],
-                                "base": null
-                              }
-                            },
-                            "description": "組織ステートメント"
-                          },
-                          {
-                            "key": "status",
-                            "type": {
-                              "of": "inner[]",
-                              "inner": "CertStatus",
-                              "cmatrix": null,
-                              "candidate": null
-                            },
-                            "description": "認定の履歴"
-                          },
-                          {
-                            "key": "trader-alliance",
-                            "type": {
-                              "of": "code[]",
-                              "cmatrix": null,
-                              "candidate": {
-                                "ns": null,
-                                "_code": null,
-                                "base": {
-                                  "_value": 38,
-                                  "_ver": 1
-                                }
-                              }
-                            },
-                            "description": "提携するデータ取引サービスプロバイダーのコード配列"
-                          }
-                        ],
-                        "attribute": null
-                      });
-                } else if (code === 1000004) {
-                    res.json({
-                        catalogItem: {
-                            ns: 'catalog/ext/test-org/actor/region-root',
-                            _code: {
-                              _value: 1000004,
+                          'main-block': {
+                              _value: 1000106,
                               _ver: 1
-                            }
+                          }
+                      }
+                  });
+              } else if (code === 1000117) {
+                  res.json({
+                      "catalogItem": {
+                        "ns": "catalog/ext/test-org/actor/app",
+                        "name": "テスト用アプリケーション",
+                        "_code": {
+                          "_value": 1000117,
+                          "_ver": 1
                         },
-                        template: {
-                            _code: {
-                                _value: 1000004,
-                                _ver: 1
+                        "inherit": {
+                          "_value": 47,
+                          "_ver": 1
+                        },
+                        "description": "テスト用アプリケーションです"
+                      },
+                      "template": {
+                        "_code": {
+                          "_value": 1000117,
+                          "_ver": 1
+                        },
+                        "category": null,
+                        "main-block": {
+                          "_value": 1000115,
+                          "_ver": 1
+                        },
+                        "other-block": null,
+                        "region-alliance": [
+                          {
+                            "_value": 1000116,
+                            "_ver": 1
+                          }
+                        ],
+                        "statement": [
+                          {
+                            "title": "組織ステートメント",
+                            "section": [
+                              {
+                                "title": "ご挨拶",
+                                "content": [
+                                  {
+                                    "sentence": "テスト用アプリケーションのステートメントです。"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "status": [
+                          {
+                            "status": "certified",
+                            "by": {
+                              "_value": 1000001,
+                              "_ver": 1
                             },
-                            'main-block': {
-                                _value: 1000111,
-                                _ver: 1
-                            },
-                            region: []
+                            "at": "20200101T000000.000+0900"
+                          }
+                        ],
+                        "workflow": [
+                          {
+                            "_value": 1000200,
+                            "_ver": 1
+                          }
+                        ]
+                      },
+                      "prop": [
+                        {
+                          "key": "category",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": [
+                                "catalog/model/category/share/actor",
+                                "catalog/built_in/category/share/actor",
+                                "catalog/ext/test-org/category/share/actor",
+                                "catalog/model/category/supply/actor",
+                                "catalog/built_in/category/supply/actor",
+                                "catalog/ext/test-org/category/supply/actor"
+                              ],
+                              "_code": null,
+                              "base": null
+                            }
+                          },
+                          "description": null
+                        },
+                        {
+                          "key": "main-block",
+                          "type": {
+                            "of": "code",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "アクター参加時に割り当てられたPXR-Block"
+                        },
+                        {
+                          "key": "other-block",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "他アクターから引き継いだPXR-Blockの配列"
+                        },
+                        {
+                          "key": "region-alliance",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 48,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "参加している領域運営サービスプロバイダーコード配列"
+                        },
+                        {
+                          "key": "statement",
+                          "type": {
+                            "of": "item[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": [
+                                {
+                                  "_value": 61,
+                                  "_ver": 1
+                                }
+                              ],
+                              "base": null
+                            }
+                          },
+                          "description": "組織ステートメント"
+                        },
+                        {
+                          "key": "status",
+                          "type": {
+                            "of": "inner[]",
+                            "inner": "CertStatus",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "認定の履歴"
+                        },
+                        {
+                          "key": "workflow",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 46,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "ワークフロー定義の配列"
                         }
+                      ],
+                      "attribute": null
                     });
-                } else if (code === 1000005) {
-                    res.json({
-                        catalogItem: {
+              } else if (code === 1000002) {
+                  res.json({
+                      "catalogItem": {
+                        "ns": "catalog/ext/test-org/actor/region-root",
+                        "name": "organization",
+                        "_code": {
+                          "_value": 1000002,
+                          "_ver": 1
+                        },
+                        "inherit": {
+                          "_value": 49,
+                          "_ver": 1
+                        },
+                        "description": "organizationの定義です。"
+                      },
+                      "template": {
+                        "_code": {
+                          "_value": 1000002,
+                          "_ver": 1
+                        },
+                        "category": null,
+                        "main-block": {
+                          "_value": 1000111,
+                          "_ver": 1
+                        },
+                        "other-block": null,
+                        "region": [
+                          {
+                            "_value": 1000003,
+                            "_ver": 1
+                          },
+                          {
+                            "_value": 1000007,
+                            "_ver": 1
+                          }
+                        ],
+                        "statement": [
+                          {
+                            "title": "組織ステートメント",
+                            "section": [
+                              {
+                                "title": "ご挨拶",
+                                "content": [
+                                  {
+                                    "sentence": "organizationの組織ステートメントです。"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "status": [
+                          {
+                            "status": "certified",
+                            "by": {
+                              "_value": 1000001,
+                              "_ver": 1
+                            },
+                            "at": "20200101T000000.000+0900"
+                          }
+                        ],
+                        "trader-alliance": [
+                          {
+                            "_value": 1000020,
+                            "_ver": 1
+                          }
+                        ]
+                      },
+                      "prop": [
+                        {
+                          "key": "category",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": [
+                                "catalog/model/category/share/actor",
+                                "catalog/built_in/category/share/actor",
+                                "catalog/ext/test-org/category/share/actor",
+                                "catalog/model/category/supply/actor",
+                                "catalog/built_in/category/supply/actor",
+                                "catalog/ext/test-org/category/supply/actor"
+                              ],
+                              "_code": null,
+                              "base": null
+                            }
+                          },
+                          "description": null
+                        },
+                        {
+                          "key": "main-block",
+                          "type": {
+                            "of": "code",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "アクター参加時に割り当てられたPXR-Block"
+                        },
+                        {
+                          "key": "other-block",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 29,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "他アクターから引き継いだPXR-Blockの配列"
+                        },
+                        {
+                          "key": "region",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 48,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "Region定義"
+                        },
+                        {
+                          "key": "statement",
+                          "type": {
+                            "of": "item[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": [
+                                {
+                                  "_value": 61,
+                                  "_ver": 1
+                                }
+                              ],
+                              "base": null
+                            }
+                          },
+                          "description": "組織ステートメント"
+                        },
+                        {
+                          "key": "status",
+                          "type": {
+                            "of": "inner[]",
+                            "inner": "CertStatus",
+                            "cmatrix": null,
+                            "candidate": null
+                          },
+                          "description": "認定の履歴"
+                        },
+                        {
+                          "key": "trader-alliance",
+                          "type": {
+                            "of": "code[]",
+                            "cmatrix": null,
+                            "candidate": {
+                              "ns": null,
+                              "_code": null,
+                              "base": {
+                                "_value": 38,
+                                "_ver": 1
+                              }
+                            }
+                          },
+                          "description": "提携するデータ取引サービスプロバイダーのコード配列"
+                        }
+                      ],
+                      "attribute": null
+                    });
+              } else if (code === 1000004) {
+                  res.json({
+                      catalogItem: {
                           ns: 'catalog/ext/test-org/actor/region-root',
                           _code: {
-                            _value: 1000005,
+                            _value: 1000004,
                             _ver: 1
                           }
-                        },
-                        template: {
-                            _code: {
-                                _value: 1000005,
-                                _ver: 1
-                            },
-                            'main-block': {
-                                _value: 1000111,
-                                _ver: 1
-                            }
+                      },
+                      template: {
+                          _code: {
+                              _value: 1000004,
+                              _ver: 1
+                          },
+                          'main-block': {
+                              _value: 1000111,
+                              _ver: 1
+                          },
+                          region: []
+                      }
+                  });
+              } else if (code === 1000005) {
+                  res.json({
+                      catalogItem: {
+                        ns: 'catalog/ext/test-org/actor/region-root',
+                        _code: {
+                          _value: 1000005,
+                          _ver: 1
                         }
-                    });
-                }
-            } else {
-                res.status(status);
-            }
+                      },
+                      template: {
+                          _code: {
+                              _value: 1000005,
+                              _ver: 1
+                          },
+                          'main-block': {
+                              _value: 1000111,
+                              _ver: 1
+                          }
+                      }
+                  });
+              }
+          } else {
+              res.status(status);
+          }
 
-            res.end();
-        };
+          res.end();
+      };
 
-        // ハンドラーのイベントリスナーを追加、アプリケーションの起動
-        this._app.get('/catalog/:code', _listener);
-        this._server = this._app.listen(3001);
-    }
+      // ハンドラーのイベントリスナーを追加、アプリケーションの起動
+      this._app.get('/catalog/:code', _listener);
+      this._server = this._app.listen(3001);
+  }
 }
 
 export class CatalogServer4Get2 {
@@ -2365,20 +2366,20 @@ describe('CatalogUpdate API', () => {
      * 全テスト実行前の処理
      */
     beforeAll(async () => {
-        await Application.start()
+        await app.start();
         // DB接続
         await common.connect();
         // DB初期化
         await common.executeSqlFile('initialData.sql');
-        // DB切断
-        await common.disconnect();
     });
     /**
      * 全テスト実行の後処理
      */
     afterAll(async () => {
+        // DB切断
+        await common.disconnect();
         // サーバ停止
-        Application.stop();
+        app.stop();
     });
 
     /**
